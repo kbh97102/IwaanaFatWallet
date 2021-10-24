@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import arakene.fatwallet.dto.PayDTO
+import arakene.fatwallet.dto.PayType
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -38,16 +39,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//
+//        auth = FirebaseAuth.getInstance()
+//        db = Firebase.firestore
+//
+//        loginByEmail()
+//
+//        saveData()
+//        saveData()
+//        saveData()
+//        saveData()
 
-        auth = FirebaseAuth.getInstance()
-        db = Firebase.firestore
 
-        loginByEmail()
 
-        saveData()
-        saveData()
-        saveData()
-        saveData()
     }
 
     private var test = 1
