@@ -1,6 +1,5 @@
 package arakene.fatwallet.dto
 
-import arakene.fatwallet.PayType
 
 data class PayDTO(
     val type: PayType? = null,
