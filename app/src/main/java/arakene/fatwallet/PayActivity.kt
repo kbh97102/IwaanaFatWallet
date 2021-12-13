@@ -9,6 +9,7 @@ import arakene.fatwallet.databinding.TestMenuLayoutBinding
 import arakene.fatwallet.dto.PayDTO
 import arakene.fatwallet.dto.PayType
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class PayActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class PayActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: TestMenuLayoutBinding
     private lateinit var db: FirebaseFirestore
+    private lateinit var collection: CollectionReference
 
     private var testID = 1
     private var updateTestNum = 999
@@ -29,6 +31,8 @@ class PayActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
+        collection = db.collection(auth.currentUser!!.uid).document("pay").collection("list")
+
         binding.logoutButton.setOnClickListener {
             auth.signOut()
         }
@@ -40,13 +44,16 @@ class PayActivity : AppCompatActivity() {
             deleteData("2CqSctPSKYRR2iPW2tnl")
         }
         binding.updateButton.setOnClickListener {
-            updateData("DfAPV3wMhREkNewwJwQW", PayDTO(PayType.input, "999", 456456, "${updateTestNum++}"))
+            updateData(
+                "DfAPV3wMhREkNewwJwQW",
+                PayDTO(PayType.input, "999", 456456, "${updateTestNum++}")
+            )
         }
     }
 
     private fun saveData() {
         if (auth.currentUser != null) {
-            db.collection(auth.currentUser!!.uid).document("pay").collection("list")
+            collection
                 .add(PayDTO(PayType.input, "${testID++}", 123, "For Test"))
                 .addOnSuccessListener {
                     Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show()
@@ -67,8 +74,7 @@ class PayActivity : AppCompatActivity() {
         if (auth.currentUser == null) {
             return
         }
-
-        db.collection(auth.currentUser!!.uid).document("pay").collection("list").document(id)
+        collection.document(id)
             .delete()
             .addOnCompleteListener {
                 Log.d("Delete", "Success")
@@ -78,12 +84,11 @@ class PayActivity : AppCompatActivity() {
             }
     }
 
-    private fun updateData(id: String, data : PayDTO){
+    private fun updateData(id: String, data: PayDTO) {
         if (auth.currentUser == null) {
             return
         }
-
-        db.collection(auth.currentUser!!.uid).document("pay").collection("list").document(id)
+        collection.document(id)
             .set(data)
             .addOnCompleteListener {
                 Log.d("Update", "Success")
