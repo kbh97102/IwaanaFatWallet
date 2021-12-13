@@ -18,6 +18,7 @@ class PayActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
 
     private var testID = 1
+    private var updateTestNum = 999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,9 @@ class PayActivity : AppCompatActivity() {
 //            DfAPV3wMhREkNewwJwQW -> test id
             deleteData("2CqSctPSKYRR2iPW2tnl")
         }
+        binding.updateButton.setOnClickListener {
+            updateData("DfAPV3wMhREkNewwJwQW", PayDTO(PayType.input, "999", 456456, "${updateTestNum++}"))
+        }
     }
 
     private fun saveData() {
@@ -53,7 +57,6 @@ class PayActivity : AppCompatActivity() {
         }
 
     }
-
 
     /*
     삭제
@@ -72,6 +75,21 @@ class PayActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Log.d("Delete", "Fail", it)
+            }
+    }
+
+    private fun updateData(id: String, data : PayDTO){
+        if (auth.currentUser == null) {
+            return
+        }
+
+        db.collection(auth.currentUser!!.uid).document("pay").collection("list").document(id)
+            .set(data)
+            .addOnCompleteListener {
+                Log.d("Update", "Success")
+            }
+            .addOnFailureListener {
+                Log.d("Update", "Fail", it)
             }
     }
 }
