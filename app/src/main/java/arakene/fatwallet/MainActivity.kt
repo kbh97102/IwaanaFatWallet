@@ -1,5 +1,6 @@
 package arakene.fatwallet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+
     private lateinit var googleSignInClient: GoogleSignInClient
     private val signInIntentForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -58,16 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveData() {
-        db.collection("arakene").document("input").collection("list")
-            .add(PayDTO(PayType.input, "1", 123, "For Test"))
-            .addOnSuccessListener {
-                Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Log.w("SaveError", e)
-            }
-    }
+
 
     private fun googleLoginInit() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -88,9 +80,9 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d("Login", "signInWithCredential:success")
                     val user = auth.currentUser
-                    Toast.makeText(this, user.toString(), Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, PayActivity::class.java)
+                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Login", "signInWithCredential:failure", task.exception)
