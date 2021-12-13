@@ -24,6 +24,15 @@
             android:text="add"
             />
 
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/add_button"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="delete"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

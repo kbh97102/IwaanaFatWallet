@@ -34,6 +34,10 @@ class PayActivity : AppCompatActivity() {
         binding.addButton.setOnClickListener {
             saveData()
         }
+        binding.deleteButton.setOnClickListener {
+//            DfAPV3wMhREkNewwJwQW -> test id
+            deleteData("2CqSctPSKYRR2iPW2tnl")
+        }
     }
 
     private fun saveData() {
@@ -50,4 +54,24 @@ class PayActivity : AppCompatActivity() {
 
     }
 
+
+    /*
+    삭제
+    리스트에서 선택된 작업에 대해서 삭제
+    넘어오는 값은
+     */
+    private fun deleteData(id: String) {
+        if (auth.currentUser == null) {
+            return
+        }
+
+        db.collection(auth.currentUser!!.uid).document("pay").collection("list").document(id)
+            .delete()
+            .addOnCompleteListener {
+                Log.d("Delete", "Success")
+            }
+            .addOnFailureListener {
+                Log.d("Delete", "Fail", it)
+            }
+    }
 }
