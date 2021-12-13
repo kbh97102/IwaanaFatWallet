@@ -13,23 +13,21 @@ class PayViewModel : ViewModel() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-    private val collection: CollectionReference
+    private val collection: CollectionReference =
+        db.collection(auth.currentUser!!.uid).document("pay").collection("list")
     private val list: MutableLiveData<List<PayDTO>> by lazy {
+        MutableLiveData()
+    }
+    private val target: MutableLiveData<String> by lazy {
         MutableLiveData()
     }
 
     private var testID = 1
 
     init {
-        val test = ArrayList<PayDTO>()
-        collection = db.collection(auth.currentUser!!.uid).document("pay").collection("list")
-        collection.get().addOnCompleteListener {
-            it.result.documents.forEach { documentSnapshot ->
-                val result = documentSnapshot.toObject(PayDTO::class.java)
-                test.add(result!!)
-            }
+        collection.addSnapshotListener { value, error ->
+            list.value = value!!.toObjects(PayDTO::class.java)
         }
-        list.value = test
     }
 
     fun getPayList(): MutableLiveData<List<PayDTO>> = list
@@ -47,11 +45,14 @@ class PayViewModel : ViewModel() {
         }
     }
 
-    fun deleteData(id: String) {
+    fun deleteData() {
         if (auth.currentUser == null) {
             return
         }
-        collection.document(id)
+        if (target.value == null) {
+            return
+        }
+        collection.document(target.value!!)
             .delete()
             .addOnCompleteListener {
                 Log.d("Delete", "Success")

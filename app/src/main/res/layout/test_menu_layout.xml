@@ -47,7 +47,17 @@
             app:layout_constraintTop_toBottomOf="@id/delete_button"
             app:layout_constraintStart_toStartOf="parent"
             android:text="update"
+            />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@android:color/holo_blue_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pay_list_recyclerview"
+            app:layout_constraintTop_toBottomOf="@id/update_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

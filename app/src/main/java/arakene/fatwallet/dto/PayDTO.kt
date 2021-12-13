@@ -6,4 +6,8 @@ data class PayDTO(
     val purpose: String? = null,
     val price: Long? = null,
     val description: String? = null
-)
+) {
+    override fun toString(): String {
+        return "PayDTO(type=$type, purpose=$purpose, price=$price, description=$description)"
+    }
+}
