@@ -10,8 +10,14 @@ import arakene.fatwallet.databinding.TestMenuLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
 import arakene.fatwallet.viewModel.PayViewModel
 
-// TODO 
-//  데이터 선택해서 변경 및 삭제 작업
+/* TODO 
+    데이터 선택해서 변경 작업
+    1. 데이터 선택 시 삭제 혹은 변경 메뉴 출력
+    2. 삭제 누르면 바로 삭제
+    3. 변경 누르면 변경 창 띄우기
+    4. 새로운 데이터 기반 데이터 변경
+    
+*/
 
 class PayActivity : AppCompatActivity() {
 
