@@ -18,7 +18,7 @@ class PayViewModel : ViewModel() {
     private val list: MutableLiveData<List<PayDTO>> by lazy {
         MutableLiveData()
     }
-    private val target: MutableLiveData<String> by lazy {
+    private val target: MutableLiveData<HashMap<String, String>> by lazy {
         MutableLiveData()
     }
 
@@ -31,6 +31,8 @@ class PayViewModel : ViewModel() {
     }
 
     fun getPayList(): MutableLiveData<List<PayDTO>> = list
+
+    fun getChangeTarget(): MutableLiveData<HashMap<String, String>> = target
 
     fun saveData() {
         if (auth.currentUser != null) {
@@ -52,13 +54,24 @@ class PayViewModel : ViewModel() {
         if (target.value == null) {
             return
         }
-        collection.document(target.value!!)
-            .delete()
+        collection
+            .whereEqualTo("type", target.value!!["type"])
+            .whereEqualTo("price", target.value!!["price"]!!.toLong())
+            .whereEqualTo("purpose", target.value!!["purpose"])
+            .whereEqualTo("description", target.value!!["description"])
+            .get()
             .addOnCompleteListener {
-                Log.d("Delete", "Success")
-            }
-            .addOnFailureListener {
-                Log.d("Delete", "Fail", it)
+                it.result.documents.forEach { it2 ->
+                    it2.reference.delete().addOnCompleteListener {
+                        Log.e("Delete", "Success")
+                    }.addOnFailureListener {
+                        Log.e("Delete", "Success")
+                    }
+                }
+                target.value = null
+            }.addOnFailureListener {
+                target.value = null
+                Log.e("Delete", "fail")
             }
     }
 
