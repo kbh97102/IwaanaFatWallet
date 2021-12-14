@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.databinding.TestMenuLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
+import arakene.fatwallet.recyclerView.SwipeHelper
 import arakene.fatwallet.viewModel.PayViewModel
 
 /* TODO 
@@ -40,12 +42,23 @@ class PayActivity : AppCompatActivity() {
     }
 
     private fun initPayListView() {
+        val swipeHelper = SwipeHelper().apply {
+            setClamp(400f)
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHelper).apply {
+            attachToRecyclerView(binding.payListRecyclerview)
+        }
         payAdapter = PayListAdapter(model)
         binding.payListRecyclerview.apply {
-            setHasFixedSize(true)
+//            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@PayActivity)
             adapter = payAdapter
+            setOnTouchListener { _, _ ->
+                swipeHelper.removePreviousClamp(this)
+                false
+            }
         }
+
     }
 
 }

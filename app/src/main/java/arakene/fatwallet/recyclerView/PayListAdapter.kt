@@ -18,16 +18,8 @@ class PayListAdapter(private val model: PayViewModel) : RecyclerView.Adapter<Pay
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PayListHolder {
-        val view = PayListItemLayoutBinding.inflate(LayoutInflater.from(parent.context))
-        view.root.setOnClickListener {
-            val map = hashMapOf(
-                "type" to view.typeText.text.toString(),
-                "purpose" to view.purposeText.text.toString(),
-                "price" to view.priceText.text.toString(),
-                "description" to view.desText.text.toString()
-            )
-            model.getChangeTarget().value = map
-        }
+        val view = PayListItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        view.vm = model
         return PayListHolder(view)
     }
 

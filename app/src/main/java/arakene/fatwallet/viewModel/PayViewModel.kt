@@ -65,13 +65,13 @@ class PayViewModel : ViewModel() {
                     it2.reference.delete().addOnCompleteListener {
                         Log.e("Delete", "Success")
                     }.addOnFailureListener {
-                        Log.e("Delete", "Success")
+                        Log.e("Delete", "fail")
                     }
                 }
                 target.value = null
             }.addOnFailureListener {
                 target.value = null
-                Log.e("Delete", "fail")
+                Log.e("Get Data", "fail")
             }
     }
 
