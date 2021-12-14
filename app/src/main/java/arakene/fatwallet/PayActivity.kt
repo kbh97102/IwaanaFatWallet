@@ -13,12 +13,9 @@ import arakene.fatwallet.recyclerView.SwipeHelper
 import arakene.fatwallet.viewModel.PayViewModel
 
 /* TODO 
-    데이터 선택해서 변경 작업
-    1. 데이터 선택 시 삭제 혹은 변경 메뉴 출력
-    2. 삭제 누르면 바로 삭제
-    3. 변경 누르면 변경 창 띄우기
-    4. 새로운 데이터 기반 데이터 변경
-    
+    1. Pay 태그 추가
+    2. Pay 에 날짜 추가
+    3. UI 개선
 */
 
 class PayActivity : AppCompatActivity() {
