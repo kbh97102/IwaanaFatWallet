@@ -71,21 +71,32 @@ class PayViewModel : ViewModel() {
                 target.value = null
             }.addOnFailureListener {
                 target.value = null
-                Log.e("Get Data", "fail")
+                Log.e("Delete Get Data", "fail")
             }
     }
 
-    fun updateData(id: String, data: PayDTO) {
+    fun updateData(data: PayDTO) {
         if (auth.currentUser == null) {
             return
         }
-        collection.document(id)
-            .set(data)
+        collection
+            .whereEqualTo("type", target.value!!["type"])
+            .whereEqualTo("price", target.value!!["price"]!!.toLong())
+            .whereEqualTo("purpose", target.value!!["purpose"])
+            .whereEqualTo("description", target.value!!["description"])
+            .get()
             .addOnCompleteListener {
-                Log.d("Update", "Success")
-            }
-            .addOnFailureListener {
-                Log.d("Update", "Fail", it)
+                it.result.documents.forEach { it2 ->
+                    it2.reference.set(data).addOnCompleteListener {
+                        Log.e("Update", "Success")
+                    }.addOnFailureListener {
+                        Log.e("Update", "fail")
+                    }
+                }
+                target.value = null
+            }.addOnFailureListener {
+                target.value = null
+                Log.e("Update Get Data", "fail")
             }
     }
 
