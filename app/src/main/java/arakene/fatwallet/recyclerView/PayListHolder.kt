@@ -1,7 +1,6 @@
 package arakene.fatwallet.recyclerView
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +14,17 @@ import java.util.*
 class PayListHolder(private val binding: PayListItemLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
+    private lateinit var currentItem: PayDTO
+
     fun bind(item: PayDTO) {
+        currentItem = item
         binding.apply {
             desText.text = item.description
             priceText.text = item.price.toString()
             purposeText.text = item.purpose.toString()
             typeText.text = item.type.toString()
+            tags.text = item.tags.toString()
+            date.text = item.date.toString()
         }
         val dialogBinding =
             PayUpdateDialogLayoutBinding.inflate(LayoutInflater.from(this@PayListHolder.binding.root.context))
@@ -68,14 +72,17 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
                         output.id -> selectedType = PayType.output
                     }
                 }
+
                 updateOk.setOnClickListener {
                     binding.vm!!.updateData(
-                        PayDTO(
-                            selectedType,
-                            updatePurpose.text.toString(),
-                            updatePrice.text.toString().toLong(),
-                            updateDes.text.toString()
-                        )
+                        item.apply {
+                            this.type = selectedType
+                            this.purpose = updatePurpose.text.toString()
+                            this.price = updatePrice.text.toString().toLong()
+                            this.description = updateDes.text.toString()
+                            this.date = pickedDate.text.toString()
+                            //TODO Tag 지정하는거 문제네이거
+                        }
                     )
                     dialog.dismiss()
                 }
@@ -90,11 +97,6 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
     }
 
     fun setTarget() {
-        binding.vm!!.getChangeTarget().value = hashMapOf(
-            "type" to binding.typeText.text.toString(),
-            "purpose" to binding.purposeText.text.toString(),
-            "price" to binding.priceText.text.toString(),
-            "description" to binding.desText.text.toString()
-        )
+        binding.vm!!.getChangeTarget().value = currentItem
     }
 }

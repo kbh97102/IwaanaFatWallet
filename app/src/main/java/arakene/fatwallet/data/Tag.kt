@@ -1,6 +1,6 @@
 package arakene.fatwallet.data
 
 data class Tag(
-    val name : String,
-    val count : Int
+    var name: String = "default",
+    var count: Int = 0
 ) {}

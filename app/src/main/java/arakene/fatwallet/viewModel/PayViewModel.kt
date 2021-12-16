@@ -19,7 +19,7 @@ class PayViewModel : ViewModel() {
     private val list: MutableLiveData<List<PayDTO>> by lazy {
         MutableLiveData()
     }
-    private val target: MutableLiveData<HashMap<String, String>> by lazy {
+    private val target: MutableLiveData<PayDTO> by lazy {
         MutableLiveData()
     }
 
@@ -33,12 +33,21 @@ class PayViewModel : ViewModel() {
 
     fun getPayList(): MutableLiveData<List<PayDTO>> = list
 
-    fun getChangeTarget(): MutableLiveData<HashMap<String, String>> = target
+    fun getChangeTarget(): MutableLiveData<PayDTO> = target
 
     fun saveData() {
         if (auth.currentUser != null) {
             collection
-                .add(PayDTO(PayType.input, "${testID++}", 123, "For Test", arrayListOf(Tag("name1", 1), Tag("name2", 2)), "2021-12-16"))
+                .add(
+                    PayDTO(
+                        PayType.input,
+                        "${testID++}",
+                        123,
+                        "For Test",
+                        arrayListOf(Tag("name1", 1), Tag("name2", 2)),
+                        "2021-12-16"
+                    )
+                )
                 .addOnSuccessListener {
                     Log.d("Save", "Success")
                 }
@@ -56,10 +65,10 @@ class PayViewModel : ViewModel() {
             return
         }
         collection
-            .whereEqualTo("type", target.value!!["type"])
-            .whereEqualTo("price", target.value!!["price"]!!.toLong())
-            .whereEqualTo("purpose", target.value!!["purpose"])
-            .whereEqualTo("description", target.value!!["description"])
+            .whereEqualTo("type", target.value!!.type)
+            .whereEqualTo("price", target.value!!.price!!.toLong())
+            .whereEqualTo("purpose", target.value!!.purpose)
+            .whereEqualTo("description", target.value!!.description)
             .get()
             .addOnCompleteListener {
                 //TODO Discount tag's count
@@ -82,10 +91,10 @@ class PayViewModel : ViewModel() {
             return
         }
         collection
-            .whereEqualTo("type", target.value!!["type"])
-            .whereEqualTo("price", target.value!!["price"]!!.toLong())
-            .whereEqualTo("purpose", target.value!!["purpose"])
-            .whereEqualTo("description", target.value!!["description"])
+            .whereEqualTo("type", target.value!!.type)
+            .whereEqualTo("price", target.value!!.price!!.toLong())
+            .whereEqualTo("purpose", target.value!!.purpose)
+            .whereEqualTo("description", target.value!!.description)
             .get()
             .addOnCompleteListener {
                 it.result.documents.forEach { it2 ->

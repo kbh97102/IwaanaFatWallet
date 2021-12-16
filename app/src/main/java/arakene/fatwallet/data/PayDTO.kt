@@ -2,12 +2,12 @@ package arakene.fatwallet.data
 
 
 data class PayDTO(
-    val type: PayType? = null,
-    val purpose: String? = null,
-    val price: Long? = null,
-    val description: String? = null,
-    val tags : List<Tag>? = null,
-    val date : String? = null
+    var type: PayType? = null,
+    var purpose: String? = null,
+    var price: Long? = null,
+    var description: String? = null,
+    var tags: ArrayList<Tag> = arrayListOf(Tag("Default", 1)),
+    var date: String? = null
 ) {
 
     override fun toString(): String {
