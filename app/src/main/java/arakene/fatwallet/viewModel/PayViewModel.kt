@@ -3,8 +3,9 @@ package arakene.fatwallet.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import arakene.fatwallet.dto.PayDTO
-import arakene.fatwallet.dto.PayType
+import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayType
+import arakene.fatwallet.data.Tag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,7 +38,7 @@ class PayViewModel : ViewModel() {
     fun saveData() {
         if (auth.currentUser != null) {
             collection
-                .add(PayDTO(PayType.input, "${testID++}", 123, "For Test"))
+                .add(PayDTO(PayType.input, "${testID++}", 123, "For Test", arrayListOf(Tag("name1", 1), Tag("name2", 2)), "2021-12-16"))
                 .addOnSuccessListener {
                     Log.d("Save", "Success")
                 }
@@ -61,6 +62,7 @@ class PayViewModel : ViewModel() {
             .whereEqualTo("description", target.value!!["description"])
             .get()
             .addOnCompleteListener {
+                //TODO Discount tag's count
                 it.result.documents.forEach { it2 ->
                     it2.reference.delete().addOnCompleteListener {
                         Log.e("Delete", "Success")

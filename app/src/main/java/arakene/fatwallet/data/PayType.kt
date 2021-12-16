@@ -1,4 +1,4 @@
-package arakene.fatwallet.dto
+package arakene.fatwallet.data
 
 enum class PayType {
     input,

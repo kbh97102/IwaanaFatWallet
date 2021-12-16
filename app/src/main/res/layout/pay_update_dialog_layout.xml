@@ -66,6 +66,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/update_price" />
 
+        <EditText
+            android:id="@+id/update_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_des" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/update_date"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/update_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_tags">
+
+            <Button
+                android:id="@+id/date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="date" />
+
+            <TextView
+                android:id="@+id/picked_date"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/date_picker"
+                android:layout_height="wrap_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <Button
             android:id="@+id/update_cancel"
             android:layout_width="wrap_content"
@@ -74,7 +108,7 @@
             android:layout_marginEnd="20dp"
             android:text="Cancel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/update_des" />
+            app:layout_constraintTop_toBottomOf="@id/update_date" />
 
         <Button
             android:id="@+id/update_ok"
@@ -84,7 +118,7 @@
             android:layout_marginEnd="20dp"
             android:text="OK"
             app:layout_constraintEnd_toStartOf="@id/update_cancel"
-            app:layout_constraintTop_toBottomOf="@id/update_des" />
+            app:layout_constraintTop_toBottomOf="@id/update_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
