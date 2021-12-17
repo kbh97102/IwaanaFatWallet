@@ -6,8 +6,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
+import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
-import arakene.fatwallet.databinding.PayUpdateDialogLayoutBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +27,7 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
             date.text = item.date.toString()
         }
         val dialogBinding =
-            PayUpdateDialogLayoutBinding.inflate(LayoutInflater.from(this@PayListHolder.binding.root.context))
+            PayAddLayoutBinding.inflate(LayoutInflater.from(this@PayListHolder.binding.root.context))
 
         binding.testUpdate.setOnClickListener {
 
