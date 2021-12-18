@@ -3,11 +3,13 @@ package arakene.fatwallet.recyclerView
 import android.app.DatePickerDialog
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
+import arakene.fatwallet.fragments.PayFullDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,6 +17,7 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var currentItem: PayDTO
+
 
     fun bind(item: PayDTO) {
         currentItem = item
@@ -26,6 +29,21 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
             tags.text = item.tags.toString()
             date.text = item.date.toString()
         }
+
+        binding.root.setOnClickListener {
+            binding.vm!!.getChangeTarget().value = item
+            PayFullDialog().show(
+                ((binding.root.context) as FragmentActivity).supportFragmentManager,
+                null
+            )
+        }
+    }
+
+    fun setTarget() {
+        binding.vm!!.getChangeTarget().value = currentItem
+    }
+
+    private fun setDialog(item: PayDTO) {
         val dialogBinding =
             PayAddLayoutBinding.inflate(LayoutInflater.from(this@PayListHolder.binding.root.context))
 
@@ -43,9 +61,9 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
             }
 
             dialogBinding.apply {
-                updatePurpose.setText(item.purpose.toString())
-                updatePrice.setText(item.price.toString())
-                updateDes.setText(item.description.toString())
+                updatePurpose.text = item.purpose.toString()
+                updatePrice.text = item.price.toString()
+                updateDes.text = item.description.toString()
 
                 datePicker.setOnClickListener {
                     val calendar = Calendar.getInstance()
@@ -96,7 +114,4 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
         }
     }
 
-    fun setTarget() {
-        binding.vm!!.getChangeTarget().value = currentItem
-    }
 }

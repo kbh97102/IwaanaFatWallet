@@ -19,6 +19,11 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.default_layout, container, false)
+
+        binding.testTextView.setOnClickListener {
+            PayFullDialog().show(requireActivity().supportFragmentManager, null)
+        }
+
         return binding.root
     }
 }

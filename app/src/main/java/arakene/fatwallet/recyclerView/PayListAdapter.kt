@@ -1,7 +1,10 @@
 package arakene.fatwallet.recyclerView
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
 import arakene.fatwallet.data.PayDTO
@@ -19,6 +22,7 @@ class PayListAdapter(private val model: PayViewModel) : RecyclerView.Adapter<Pay
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PayListHolder {
         val view = PayListItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         view.vm = model
+
         return PayListHolder(view)
     }
 

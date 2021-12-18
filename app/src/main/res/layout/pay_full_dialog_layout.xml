@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="arakene.fatwallet.viewModel.PayViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioGroup
+            android:id="@+id/type_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_button_border"
+                android:buttonTint="#00a2ee"
+                android:gravity="center"
+                android:text="Input"
+                android:textColor="#00a2ee"
+                android:textSize="25sp" />
+
+            <RadioButton
+                android:id="@+id/output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/output_button_border"
+                android:buttonTint="#ff7f00"
+                android:gravity="center"
+                android:text="Output"
+                android:textColor="#ff7f00"
+                android:textSize="25sp" />
+
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/calendar_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <ImageButton
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/fui_transparent"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            app:layout_constraintEnd_toEndOf="@id/calendar_end"
+            app:layout_constraintTop_toBottomOf="@id/type_radio" />
+
+        <TextView
+            android:id="@+id/update_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/date_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type_radio" />
+
+        <TextView
+            android:id="@+id/picked_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/add_textview_style"
+            android:text='@{vm.changeTarget.date}'
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/date_picker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type_radio" />
+
+        <TextView
+            android:id="@+id/update_purpose_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/purpose_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picked_date" />
+
+        <EditText
+            android:id="@+id/update_purpose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/add_textview_style"
+            android:textSize="20sp"
+            android:text='@{vm.changeTarget.purpose}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/update_purpose_text"
+            app:layout_constraintTop_toBottomOf="@id/picked_date" />
+
+        <TextView
+            android:id="@+id/update_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/price_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_purpose_text" />
+
+        <EditText
+            android:id="@+id/update_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/add_textview_style"
+            android:textSize="20sp"
+            android:text='@{vm.changeTarget.price.toString()}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/update_price_text"
+            app:layout_constraintTop_toBottomOf="@id/update_purpose"
+            android:inputType="number"
+            />
+
+        <TextView
+            android:id="@+id/update_des_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/des_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_price_text" />
+
+        <EditText
+            android:id="@+id/update_des"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/add_textview_style"
+            android:textSize="20sp"
+            android:text='@{vm.changeTarget.description}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/update_des_text"
+            app:layout_constraintTop_toBottomOf="@id/update_price" />
+
+        <TextView
+            android:id="@+id/update_tag_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/tag_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_des" />
+
+        <TextView
+            android:id="@+id/update_tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/add_textview_style"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/update_tag_text"
+            app:layout_constraintTop_toBottomOf="@id/update_des" />
+
+
+        <Button
+            android:id="@+id/update_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/fui_transparent"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:onClick="@{()->vm.deleteData()}"
+            app:layout_constraintEnd_toStartOf="@id/update_delete"
+            app:layout_constraintTop_toBottomOf="@id/update_tags" />
+
+        <Button
+            android:id="@+id/update_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/fui_transparent"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/update_ok"
+            app:layout_constraintTop_toBottomOf="@id/update_tags" />
+
+        <Button
+            android:id="@+id/update_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="Update"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/update_tags" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
