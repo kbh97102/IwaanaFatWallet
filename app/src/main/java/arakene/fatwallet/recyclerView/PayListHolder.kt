@@ -61,9 +61,9 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
             }
 
             dialogBinding.apply {
-                updatePurpose.text = item.purpose.toString()
-                updatePrice.text = item.price.toString()
-                updateDes.text = item.description.toString()
+                updatePurpose.setText(item.purpose.toString())
+                updatePrice.setText(item.price.toString())
+                updateDes.setText(item.description.toString())
 
                 datePicker.setOnClickListener {
                     val calendar = Calendar.getInstance()

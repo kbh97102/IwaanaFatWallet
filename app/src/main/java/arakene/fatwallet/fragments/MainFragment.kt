@@ -1,17 +1,23 @@
 package arakene.fatwallet.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
 import arakene.fatwallet.databinding.DefaultLayoutBinding
+import arakene.fatwallet.viewModel.PayListViewModel
+import arakene.fatwallet.viewModel.PayViewModel
 
 class MainFragment : Fragment() {
 
-    private lateinit var binding : DefaultLayoutBinding
+    private lateinit var binding: DefaultLayoutBinding
+    private val model: PayListViewModel by activityViewModels()
+    private val model2: PayViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,11 +25,15 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.default_layout, container, false)
+        binding.lifecycleOwner = this
+        binding.payListViewModel = model
 
-        binding.testTextView.setOnClickListener {
-            PayFullDialog().show(requireActivity().supportFragmentManager, null)
-        }
+
+//        model.getFullList().observe(viewLifecycleOwner, {
+//            Log.e("ListTest", model.getTotalPay().toString())
+//        })
 
         return binding.root
     }
+
 }

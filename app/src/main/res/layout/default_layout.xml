@@ -2,23 +2,90 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="payListViewModel"
+            type="arakene.fatwallet.viewModel.PayListViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/input_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/test_TextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="60sp"
-            android:text="DEFAULT"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/input_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <TextView
+            android:id="@+id/total_input_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_text"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@id/input_start"
+            app:layout_constraintTop_toTopOf="@id/input_top" />
+
+        <TextView
+            android:id="@+id/total_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text='@{payListViewModel.input}'
+            app:layout_constraintStart_toEndOf="@id/total_input_label"
+            app:layout_constraintTop_toTopOf="@id/input_top" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/output_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12" />
+
+        <TextView
+            android:id="@+id/total_output_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/output_text"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@id/input_start"
+            app:layout_constraintTop_toBottomOf="@id/output_top" />
+
+        <TextView
+            android:id="@+id/total_output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text='@{payListViewModel.output}'
+            app:layout_constraintStart_toEndOf="@id/total_output_label"
+            app:layout_constraintTop_toBottomOf="@id/output_top" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/monthly_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <TextView
+            android:id="@+id/monthly_output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고정지출"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@id/input_start"
+            app:layout_constraintTop_toBottomOf="@id/monthly_top" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

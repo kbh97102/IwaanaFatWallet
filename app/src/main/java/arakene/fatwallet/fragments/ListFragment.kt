@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.R
 import arakene.fatwallet.databinding.ListLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
-import arakene.fatwallet.recyclerView.SwipeHelper
 import arakene.fatwallet.viewModel.PayViewModel
 
 class ListFragment : Fragment() {
@@ -29,7 +27,7 @@ class ListFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
         initPayListView()
 
-        model.getPayList().observe(this, {
+        model.getPayList().observe(viewLifecycleOwner, {
             payAdapter.setItems(it)
             payAdapter.notifyDataSetChanged()
         })
@@ -39,20 +37,20 @@ class ListFragment : Fragment() {
     }
 
     private fun initPayListView() {
-        val swipeHelper = SwipeHelper().apply {
-            setClamp(400f)
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeHelper).apply {
-            attachToRecyclerView(binding.payListRecyclerview)
-        }
+//        val swipeHelper = SwipeHelper().apply {
+//            setClamp(400f)
+//        }
+//        val itemTouchHelper = ItemTouchHelper(swipeHelper).apply {
+//            attachToRecyclerView(binding.payListRecyclerview)
+//        }
         payAdapter = PayListAdapter(model)
         binding.payListRecyclerview.apply {
             layoutManager = LinearLayoutManager(this@ListFragment.context)
             adapter = payAdapter
-            setOnTouchListener { _, _ ->
-                swipeHelper.removePreviousClamp(this)
-                false
-            }
+//            setOnTouchListener { _, _ ->
+//                swipeHelper.removePreviousClamp(this)
+//                false
+//            }
         }
     }
 }

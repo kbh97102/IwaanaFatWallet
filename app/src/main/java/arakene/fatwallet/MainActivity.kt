@@ -49,10 +49,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            signIn()
-        }
+//        val currentUser = auth.currentUser
+//        if (currentUser == null) {
+//            signIn()
+//        }
+        signIn()
     }
 
 

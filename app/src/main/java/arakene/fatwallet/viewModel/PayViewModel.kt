@@ -75,12 +75,12 @@ class PayViewModel : ViewModel() {
             collection
                 .add(
                     PayDTO(
-                        PayType.input,
-                        "purpose",
-                        123456,
+                        type,
+                        purpose,
+                        price.toLong(),
                         "des",
                         arrayListOf(Tag("name1", 1), Tag("name2", 2)),
-                        "date"
+                        date
                     )
                 )
                 .addOnSuccessListener {
