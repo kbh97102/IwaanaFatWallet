@@ -1,6 +1,7 @@
 package arakene.fatwallet
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import arakene.fatwallet.databinding.MainMenuLayoutBinding
+import arakene.fatwallet.viewModel.PayViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainUITestActivity : AppCompatActivity() {
@@ -18,6 +20,9 @@ class MainUITestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_menu_layout)
+
+        val test: PayViewModel by viewModels()
+        binding.vm = test
 
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 

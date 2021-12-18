@@ -1,6 +1,9 @@
 package arakene.fatwallet.viewModel
 
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import arakene.fatwallet.data.PayDTO
@@ -46,6 +49,38 @@ class PayViewModel : ViewModel() {
                         "For Test",
                         arrayListOf(Tag("name1", 1), Tag("name2", 2)),
                         "2021-12-16"
+                    )
+                )
+                .addOnSuccessListener {
+                    Log.d("Save", "Success")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("SaveError", e)
+                }
+        }
+    }
+
+    fun saveData(
+        type: PayType,
+        purpose: String,
+        price: String,
+        des: String,
+        date: String,
+        tags: String
+    ) {
+
+        Log.e("BindingAdapter Test", "type $type, purpose $purpose")
+
+        if (auth.currentUser != null) {
+            collection
+                .add(
+                    PayDTO(
+                        PayType.input,
+                        "purpose",
+                        123456,
+                        "des",
+                        arrayListOf(Tag("name1", 1), Tag("name2", 2)),
+                        "date"
                     )
                 )
                 .addOnSuccessListener {

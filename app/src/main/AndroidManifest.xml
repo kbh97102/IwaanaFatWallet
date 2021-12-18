@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IWannaFatWallet">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".PayActivity" />
-        <activity android:name=".MainUITestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".PayActivity" />
+        <activity android:name=".MainUITestActivity">
+
         </activity>
 
 
