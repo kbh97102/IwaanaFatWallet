@@ -71,20 +71,15 @@ class TagList : ViewModel() {
         }
     }
 
-    fun deleteTag() {
-        if (target.value == null) {
-            return
-        }
-        if (list.value!!.contains(target.value!!)) {
-            collection.whereEqualTo("name", target.value!!.name).get()
+    fun deleteTag(removeTarget : PayTag) {
+        if (list.value!!.contains(removeTarget)) {
+            collection.whereEqualTo("name", removeTarget.name).get()
                 .addOnCompleteListener {
                     it.result.documents.forEach { documentSnapshot ->
                         documentSnapshot.reference.delete().addOnCompleteListener {
                             Log.e("Tag Delete", "Success")
-                            target.value = null
                         }.addOnFailureListener {
                             Log.e("Tag Delete", "Fail")
-                            target.value = null
                         }
                     }
                 }

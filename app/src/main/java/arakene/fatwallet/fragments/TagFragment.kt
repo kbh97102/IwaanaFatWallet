@@ -27,18 +27,7 @@ class TagFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.tag_layout, container, false)
 
-        val model: TagList by activityViewModels()
-
-        tagAdapter = TagAdapter(model)
-        binding.tagRecycler.apply {
-            layoutManager = LinearLayoutManager(binding.root.context)
-            adapter = tagAdapter
-        }
-
-        model.getTagList().observe(viewLifecycleOwner, {
-            tagAdapter.setItems(it)
-            tagAdapter.notifyDataSetChanged()
-        })
+        setRecyclerView()
 
         binding.tagToolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.tag_add) {
@@ -52,6 +41,21 @@ class TagFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setRecyclerView() {
+        val model: TagList by activityViewModels()
+
+        tagAdapter = TagAdapter(model)
+        binding.tagRecycler.apply {
+            layoutManager = LinearLayoutManager(binding.root.context)
+            adapter = tagAdapter
+        }
+
+        model.getTagList().observe(viewLifecycleOwner, {
+            tagAdapter.setItems(it)
+            tagAdapter.notifyDataSetChanged()
+        })
     }
 
 }
