@@ -99,7 +99,6 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
                             this.price = updatePrice.text.toString().toLong()
                             this.description = updateDes.text.toString()
                             this.date = pickedDate.text.toString()
-                            //TODO Tag 지정하는거 문제네이거
                         }
                     )
                     dialog.dismiss()

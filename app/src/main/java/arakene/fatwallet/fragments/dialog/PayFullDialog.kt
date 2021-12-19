@@ -15,6 +15,8 @@ import arakene.fatwallet.R
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayFullDialogLayoutBinding
+import arakene.fatwallet.test.TagList
+import arakene.fatwallet.test.TestWordBox
 import arakene.fatwallet.viewModel.PayViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +35,16 @@ class PayFullDialog() : DialogFragment() {
             DataBindingUtil.inflate(inflater, R.layout.pay_full_dialog_layout, container, false)
 
         binding.vm = model
+
+        val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
+
+        val tagList: TagList by activityViewModels()
+
+        tagList.getTagList().observe(viewLifecycleOwner, {
+            it.forEach { payTag ->
+                testWordBox.addButton(payTag.name)
+            }
+        })
 
         setClickListener()
 

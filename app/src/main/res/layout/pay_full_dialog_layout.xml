@@ -111,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/add_textview_style"
-            android:textSize="20sp"
             android:text='@{vm.changeTarget.purpose}'
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/update_purpose_text"
             app:layout_constraintTop_toBottomOf="@id/picked_date" />
@@ -133,13 +133,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/add_textview_style"
-            android:textSize="20sp"
+            android:inputType="number"
             android:text='@{vm.changeTarget.price.toString()}'
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/update_price_text"
-            app:layout_constraintTop_toBottomOf="@id/update_purpose"
-            android:inputType="number"
-            />
+            app:layout_constraintTop_toBottomOf="@id/update_purpose" />
 
         <TextView
             android:id="@+id/update_des_text"
@@ -157,8 +156,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/add_textview_style"
-            android:textSize="20sp"
             android:text='@{vm.changeTarget.description}'
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/update_des_text"
             app:layout_constraintTop_toBottomOf="@id/update_price" />
@@ -225,6 +224,38 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/update_tags" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/calendar_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <GridLayout
+            android:id="@+id/word_box"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/word_box_bottom"
+            app:layout_constraintEnd_toEndOf="@id/calendar_end"
+            app:layout_constraintStart_toStartOf="@id/calendar_start"
+            app:layout_constraintTop_toBottomOf="@id/word_box_top" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/word_box_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.53" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/word_box_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

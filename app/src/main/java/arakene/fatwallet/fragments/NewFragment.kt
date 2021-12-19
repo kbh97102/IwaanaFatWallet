@@ -37,7 +37,7 @@ class NewFragment : Fragment() {
 
         setData()
 
-        val testWordBox = TestWordBox(binding, this.context!!)
+        val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
 
         val tagList: TagList by activityViewModels()
 

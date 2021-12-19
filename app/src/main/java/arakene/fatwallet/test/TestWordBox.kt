@@ -2,14 +2,19 @@ package arakene.fatwallet.test
 
 import android.content.Context
 import android.widget.Button
+import android.widget.GridLayout
 import android.widget.LinearLayout
-import arakene.fatwallet.databinding.PayAddLayoutBinding
+import android.widget.TextView
 
-class TestWordBox(private val binding: PayAddLayoutBinding, private val context: Context) {
+class TestWordBox(
+    private val textView: TextView,
+    private val wordBox: GridLayout,
+    private val context: Context
+) {
 
     private var testNum = 0
 
-    fun addButton(name : String) {
+    fun addButton(name: String) {
         val button = Button(context).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -20,13 +25,13 @@ class TestWordBox(private val binding: PayAddLayoutBinding, private val context:
             text = name
 
             setOnClickListener {
-                val builder = StringBuilder(binding.updateTags.text)
+                val builder = StringBuilder(textView.text)
                 builder.append(" ").append(this.text)
-                binding.updateTags.text = builder.toString()
+                textView.text = builder.toString()
             }
         }
 
-        binding.wordBox.addView(button)
+        wordBox.addView(button)
     }
 
 }
