@@ -31,17 +31,25 @@ class PayFullDialog() : DialogFragment() {
 
         binding.vm = model
 
-        binding.updateCancel.setOnClickListener {
-            dismiss()
-        }
+        setClickListener()
 
+        return binding.root
+    }
+
+    private fun setClickListener() {
         binding.apply {
-            when(vm!!.getChangeTarget().value!!.type){
+            when (vm!!.getChangeTarget().value!!.type) {
                 PayType.input -> typeRadio.check(R.id.input)
                 PayType.output -> typeRadio.check(R.id.output)
                 else -> {}
             }
-
+            updateDelete.setOnClickListener {
+                vm!!.deleteData()
+                dismiss()
+            }
+            updateCancel.setOnClickListener {
+                dismiss()
+            }
             updateOk.setOnClickListener {
                 vm!!.updateData(
                     PayDTO(
@@ -55,8 +63,6 @@ class PayFullDialog() : DialogFragment() {
                 this@PayFullDialog.dismiss()
             }
         }
-
-        return binding.root
     }
 
     override fun onResume() {
