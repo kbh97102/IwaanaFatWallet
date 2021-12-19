@@ -1,10 +1,12 @@
 package arakene.fatwallet.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -49,7 +51,7 @@ class NewFragment : Fragment() {
             if (hasFocus) {
                 Log.e("FocusTest", "in")
                 binding.wordBox.visibility = View.VISIBLE
-            }else{
+            } else {
                 Log.e("FocusTest", "out")
                 binding.wordBox.visibility = View.INVISIBLE
             }
@@ -59,6 +61,34 @@ class NewFragment : Fragment() {
     }
 
     private fun setData() {
+        binding.apply {
+            typeRadio.check(binding.input.id)
+            newReset.setOnClickListener {
+                clear()
+            }
+            pickedDate.text = getToday()
+            updateOk.setOnClickListener {
+                var selectedID = PayType.input
+                when (typeRadio.checkedRadioButtonId) {
+                    R.id.input -> selectedID = PayType.input
+                    R.id.output -> selectedID = PayType.output
+                }
+
+                binding.apply {
+                    vm!!.saveData(
+                        selectedID,
+                        updatePurpose.text.toString(),
+                        updatePrice.text.toString(),
+                        updateDes.text.toString(),
+                        date = pickedDate.text.toString(),
+                        "tags"
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getToday(): String {
         val calendar = Calendar.getInstance()
         val year = calendar[Calendar.YEAR]
         val month = calendar[Calendar.MONTH] + 1
@@ -66,27 +96,18 @@ class NewFragment : Fragment() {
         val date = calendar.time
         val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
         val dayName: String = simpledateformat.format(date)
-
-        binding.pickedDate.text = "$year.$month.$day ($dayName)"
-
-        binding.updateOk.setOnClickListener {
-            var selectedID = PayType.input
-            when (binding.typeRadio.checkedRadioButtonId) {
-                R.id.input -> selectedID = PayType.input
-                R.id.output -> selectedID = PayType.output
-            }
-
-            binding.apply {
-                vm!!.saveData(
-                    selectedID,
-                    updatePurpose.text.toString(),
-                    updatePrice.text.toString(),
-                    updateDes.text.toString(),
-                    date = pickedDate.text.toString(),
-                    "tags"
-                )
-            }
-        }
+        return "$year.$month.$day ($dayName)"
     }
 
+    private fun clear() {
+        binding.apply {
+            pickedDate.text = getToday()
+            updatePurpose.text = null
+            updatePrice.text = null
+            updateDes.text = null
+            updateTags.text = null
+        }
+        val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.newReset.windowToken, 0)
+    }
 }
