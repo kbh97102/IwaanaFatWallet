@@ -207,6 +207,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/update_tags" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/tag_box_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/tag_box_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.53" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/tag_box_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.93" />
+
+        <GridLayout
+            android:id="@+id/word_box"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tag_box_bottom"
+            app:layout_constraintEnd_toEndOf="@id/calendar_end"
+            app:layout_constraintStart_toStartOf="@id/tag_box_start"
+            app:layout_constraintTop_toTopOf="@id/tag_box_top">
+
+        </GridLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

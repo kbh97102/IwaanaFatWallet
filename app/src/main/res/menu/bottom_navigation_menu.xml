@@ -5,15 +5,20 @@
         android:id="@+id/newFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_fiber_new_24"
-        android:title="New"/>
+        android:title="New" />
     <item
         android:id="@+id/listFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_fiber_new_24"
-        android:title="List"/>
+        android:title="List" />
     <item
         android:id="@+id/mainFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_fiber_new_24"
-        android:title="Default"/>
+        android:title="Default" />
+    <item
+        android:id="@+id/tagFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_fiber_new_24"
+        android:title="Tag" />
 </menu>

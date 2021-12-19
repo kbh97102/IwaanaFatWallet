@@ -1,4 +1,4 @@
-package arakene.fatwallet.fragments
+package arakene.fatwallet.fragments.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
-import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.databinding.PayFullDialogLayoutBinding
 import arakene.fatwallet.viewModel.PayViewModel
 

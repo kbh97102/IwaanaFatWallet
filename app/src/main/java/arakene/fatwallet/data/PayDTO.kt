@@ -6,7 +6,7 @@ data class PayDTO(
     var purpose: String? = null,
     var price: Long? = null,
     var description: String? = null,
-    var tags: ArrayList<Tag> = arrayListOf(Tag("Default", 1)),
+    var tags: ArrayList<PayTag> = arrayListOf(PayTag("Default", 1)),
     var date: String? = null
 ) {
 

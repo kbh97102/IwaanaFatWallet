@@ -1,14 +1,11 @@
 package arakene.fatwallet.viewModel
 
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
-import arakene.fatwallet.data.Tag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,7 +44,7 @@ class PayViewModel : ViewModel() {
                         "${testID++}",
                         123,
                         "For Test",
-                        arrayListOf(Tag("name1", 1), Tag("name2", 2)),
+                        arrayListOf(PayTag("name1", 1), PayTag("name2", 2)),
                         "2021-12-16"
                     )
                 )
@@ -69,7 +66,12 @@ class PayViewModel : ViewModel() {
         tags: String
     ) {
 
-        Log.e("BindingAdapter Test", "type $type, purpose $purpose")
+        val tagList = ArrayList<PayTag>()
+        tags.split(" ").let {
+            it.forEach { name ->
+                tagList.add(PayTag(name, 1))
+            }
+        }
 
         if (auth.currentUser != null) {
             collection
@@ -78,8 +80,8 @@ class PayViewModel : ViewModel() {
                         type,
                         purpose,
                         price.toLong(),
-                        "des",
-                        arrayListOf(Tag("name1", 1), Tag("name2", 2)),
+                        des,
+                        tagList,
                         date
                     )
                 )
@@ -106,7 +108,6 @@ class PayViewModel : ViewModel() {
             .whereEqualTo("description", target.value!!.description)
             .get()
             .addOnCompleteListener {
-                //TODO Discount tag's count
                 it.result.documents.forEach { it2 ->
                     it2.reference.delete().addOnCompleteListener {
                         Log.e("Delete", "Success")

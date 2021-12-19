@@ -21,4 +21,11 @@
         android:label="NewFragment"
         tools:layout="@layout/pay_add_layout"
         />
+
+    <fragment
+        android:id="@+id/tagFragment"
+        android:name="arakene.fatwallet.fragments.TagFragment"
+        android:label="TagFragment"
+        tools:layout="@layout/tag_layout"
+        />
 </navigation>

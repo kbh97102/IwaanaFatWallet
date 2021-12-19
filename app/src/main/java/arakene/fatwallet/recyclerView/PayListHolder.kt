@@ -9,7 +9,7 @@ import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
-import arakene.fatwallet.fragments.PayFullDialog
+import arakene.fatwallet.fragments.dialog.PayFullDialog
 import java.text.SimpleDateFormat
 import java.util.*
 

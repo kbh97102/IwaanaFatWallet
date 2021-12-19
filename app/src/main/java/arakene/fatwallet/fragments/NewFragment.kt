@@ -1,6 +1,7 @@
 package arakene.fatwallet.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
+import arakene.fatwallet.test.TagList
+import arakene.fatwallet.test.TestWordBox
 import arakene.fatwallet.viewModel.PayViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,6 +32,33 @@ class NewFragment : Fragment() {
 
         binding.vm = test
 
+        setData()
+
+        val testWordBox = TestWordBox(binding, this.context!!)
+
+        val tagList: TagList by activityViewModels()
+
+        tagList.getTagList().observe(viewLifecycleOwner, {
+            it.forEach { payTag ->
+                testWordBox.addButton(payTag.name)
+            }
+        })
+
+        binding.updateTags.focusable = View.FOCUSABLE
+        binding.updateTags.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                Log.e("FocusTest", "in")
+                binding.wordBox.visibility = View.VISIBLE
+            }else{
+                Log.e("FocusTest", "out")
+                binding.wordBox.visibility = View.INVISIBLE
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun setData() {
         val calendar = Calendar.getInstance()
         val year = calendar[Calendar.YEAR]
         val month = calendar[Calendar.MONTH] + 1
@@ -57,9 +87,6 @@ class NewFragment : Fragment() {
                 )
             }
         }
-
-        return binding.root
     }
-
 
 }
