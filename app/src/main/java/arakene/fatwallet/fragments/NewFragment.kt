@@ -1,5 +1,6 @@
 package arakene.fatwallet.fragments
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -73,20 +74,41 @@ class NewFragment : Fragment() {
                     R.id.input -> selectedID = PayType.input
                     R.id.output -> selectedID = PayType.output
                 }
+                vm!!.saveData(
+                    selectedID,
+                    updatePurpose.text.toString(),
+                    updatePrice.text.toString(),
+                    updateDes.text.toString(),
+                    date = pickedDate.text.toString(),
+                    updateTags.text.toString()
+                )
+            }
 
-                binding.apply {
-                    vm!!.saveData(
-                        selectedID,
-                        updatePurpose.text.toString(),
-                        updatePrice.text.toString(),
-                        updateDes.text.toString(),
-                        date = pickedDate.text.toString(),
-                        "tags"
-                    )
-                }
+            datePicker.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, _year, monthOfYear, dayOfMonth ->
+                        val _month = monthOfYear + 1
+                        val _calendar = Calendar.getInstance()
+                        _calendar.set(year, monthOfYear, dayOfMonth)
+                        val date = calendar.time
+                        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
+                        val dayName: String = simpledateformat.format(date)
+                        pickedDate.text = "$_year.$_month.$dayOfMonth ($dayName)"
+                    },
+                    year,
+                    month,
+                    day
+                )
+                datePickerDialog.show()
             }
         }
     }
+
 
     private fun getToday(): String {
         val calendar = Calendar.getInstance()

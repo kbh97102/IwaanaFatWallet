@@ -1,5 +1,6 @@
 package arakene.fatwallet.fragments.dialog
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,8 @@ import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayFullDialogLayoutBinding
 import arakene.fatwallet.viewModel.PayViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PayFullDialog() : DialogFragment() {
 
@@ -61,6 +64,28 @@ class PayFullDialog() : DialogFragment() {
                     )
                 )
                 this@PayFullDialog.dismiss()
+            }
+            datePicker.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, _year, monthOfYear, dayOfMonth ->
+                        val _month = monthOfYear + 1
+                        val _calendar = Calendar.getInstance()
+                        _calendar.set(year, monthOfYear, dayOfMonth)
+                        val date = calendar.time
+                        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
+                        val dayName: String = simpledateformat.format(date)
+                        pickedDate.text = "$_year.$_month.$dayOfMonth ($dayName)"
+                    },
+                    year,
+                    month,
+                    day
+                )
+                datePickerDialog.show()
             }
         }
     }
