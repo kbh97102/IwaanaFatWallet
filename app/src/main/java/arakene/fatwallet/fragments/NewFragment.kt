@@ -82,6 +82,7 @@ class NewFragment : Fragment() {
                     date = pickedDate.text.toString(),
                     updateTags.text.toString()
                 )
+                clear()
             }
 
             datePicker.setOnClickListener {
