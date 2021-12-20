@@ -1,14 +1,13 @@
 package arakene.fatwallet.recyclerView
 
-import android.util.Log
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginStart
-import androidx.core.view.size
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import arakene.fatwallet.R
 import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
 import arakene.fatwallet.fragments.dialog.PayFullDialog
 
@@ -22,7 +21,21 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
 
         currentItem = item
         binding.apply {
-            priceText.text = item.price.toString()
+            when (item.type) {
+                PayType.input -> {
+                    priceText.apply {
+                        text = "+${item.price.toString()}"
+                        setTextColor(ContextCompat.getColor(context, R.color.input_color))
+                    }
+                }
+                PayType.output -> {
+                    priceText.apply {
+                        text = "-${item.price.toString()}"
+                        setTextColor(ContextCompat.getColor(context, R.color.output_color))
+                    }
+                }
+            }
+
             purposeText.text = item.purpose.toString()
             tags.removeAllViews()
             item.tags.forEach {
