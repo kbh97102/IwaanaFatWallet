@@ -65,6 +65,17 @@ class PayFullDialog() : DialogFragment() {
             updateCancel.setOnClickListener {
                 dismiss()
             }
+
+            val builder = StringBuilder()
+            vm!!.getChangeTarget().value!!.tags.forEachIndexed { index, payTag ->
+                if (index == vm!!.getChangeTarget().value!!.tags.size - 1) {
+                    builder.append(payTag.name)
+                } else {
+                    builder.append(payTag.name).append(" ")
+                }
+            }
+            updateTags.text = builder.toString()
+
             updateOk.setOnClickListener {
                 vm!!.updateData(
                     PayDTO(
@@ -73,7 +84,7 @@ class PayFullDialog() : DialogFragment() {
                         updatePrice.text.toString().toLong(),
                         updateDes.text.toString(),
                         date = pickedDate.text.toString()
-                    )
+                    ), updateTags.text.toString()
                 )
                 this@PayFullDialog.dismiss()
             }

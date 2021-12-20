@@ -1,6 +1,7 @@
 package arakene.fatwallet.test
 
 import android.content.Context
+import android.util.Log
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.LinearLayout
@@ -12,9 +13,13 @@ class TestWordBox(
     private val context: Context
 ) {
 
-    private var testNum = 0
-
     fun addButton(name: String) {
+        val currentTags = textView.text.toString().split(" ")
+
+        if (currentTags.contains(name)) {
+            return
+        }
+
         val button = Button(context).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

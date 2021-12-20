@@ -37,20 +37,10 @@ class ListFragment : Fragment() {
     }
 
     private fun initPayListView() {
-//        val swipeHelper = SwipeHelper().apply {
-//            setClamp(400f)
-//        }
-//        val itemTouchHelper = ItemTouchHelper(swipeHelper).apply {
-//            attachToRecyclerView(binding.payListRecyclerview)
-//        }
         payAdapter = PayListAdapter(model)
         binding.payListRecyclerview.apply {
             layoutManager = LinearLayoutManager(this@ListFragment.context)
             adapter = payAdapter
-//            setOnTouchListener { _, _ ->
-//                swipeHelper.removePreviousClamp(this)
-//                false
-//            }
         }
     }
 }

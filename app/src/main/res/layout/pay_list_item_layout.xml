@@ -9,93 +9,75 @@
             type="arakene.fatwallet.viewModel.PayViewModel" />
     </data>
 
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
 
-            <Button
-                android:id="@+id/test_remove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="remove"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{()->vm.deleteData()}"
-                />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
 
-            <Button
-                android:id="@+id/test_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="update"
-                app:layout_constraintEnd_toStartOf="@id/test_remove"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/purpose_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="식비"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toTopOf="@id/top" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="12400"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/purpose_text" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/swipeView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
 
-            <TextView
-                android:id="@+id/type_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/purpose_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/type_text" />
+        <GridLayout
+            android:id="@+id/tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            app:layout_constraintStart_toEndOf="@id/purpose_text"
+            app:layout_constraintTop_toTopOf="@id/top" />
 
-            <TextView
-                android:id="@+id/price_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/purpose_text" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="2021.12.20 (월요일)"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/end" />
 
-            <TextView
-                android:id="@+id/des_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price_text" />
-
-            <TextView
-                android:id="@+id/tags"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/des_text" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tags" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

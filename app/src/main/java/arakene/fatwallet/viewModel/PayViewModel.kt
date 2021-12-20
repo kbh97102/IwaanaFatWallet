@@ -23,8 +23,6 @@ class PayViewModel : ViewModel() {
         MutableLiveData()
     }
 
-    private var testID = 1
-
     init {
         collection.addSnapshotListener { value, error ->
             list.value = value!!.toObjects(PayDTO::class.java)
@@ -34,28 +32,6 @@ class PayViewModel : ViewModel() {
     fun getPayList(): MutableLiveData<List<PayDTO>> = list
 
     fun getChangeTarget(): MutableLiveData<PayDTO> = target
-
-    fun saveData() {
-        if (auth.currentUser != null) {
-            collection
-                .add(
-                    PayDTO(
-                        PayType.input,
-                        "${testID++}",
-                        123,
-                        "For Test",
-                        arrayListOf(PayTag("name1", 1), PayTag("name2", 2)),
-                        "2021-12-16"
-                    )
-                )
-                .addOnSuccessListener {
-                    Log.d("Save", "Success")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("SaveError", e)
-                }
-        }
-    }
 
     fun saveData(
         type: PayType,
@@ -67,8 +43,8 @@ class PayViewModel : ViewModel() {
     ) {
 
         val tagList = ArrayList<PayTag>()
-        tags.split(" ").let {
-            it.forEach { name ->
+        tags.split(" ").onEach { name ->
+            if (name.trim() != "") {
                 tagList.add(PayTag(name, 1))
             }
         }
@@ -122,10 +98,20 @@ class PayViewModel : ViewModel() {
             }
     }
 
-    fun updateData(data: PayDTO) {
+    fun updateData(data: PayDTO, tags: String) {
         if (auth.currentUser == null) {
             return
         }
+
+        val tagList = ArrayList<PayTag>()
+        tags.split(" ").let {
+            it.forEach { name ->
+                tagList.add(PayTag(name, 1))
+            }
+        }
+
+        data.tags = tagList
+
         collection
             .whereEqualTo("type", target.value!!.type)
             .whereEqualTo("price", target.value!!.price!!.toLong())
