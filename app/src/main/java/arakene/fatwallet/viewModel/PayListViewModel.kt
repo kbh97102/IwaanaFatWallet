@@ -2,7 +2,7 @@ package arakene.fatwallet.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayData
 import arakene.fatwallet.data.PayType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -17,14 +17,14 @@ class PayListViewModel : ViewModel() {
     private val collection: CollectionReference =
         db.collection(auth.currentUser!!.uid).document("pay").collection("list")
 
-    private var list: List<PayDTO> = ArrayList()
+    private var list: List<PayData> = ArrayList()
 
     private val inputText = MutableLiveData<String>()
     private val outputText = MutableLiveData<String>()
 
     init {
         collection.addSnapshotListener { value, error ->
-            list = value!!.toObjects(PayDTO::class.java)
+            list = value!!.toObjects(PayData::class.java)
             getTotalPay()
         }
     }

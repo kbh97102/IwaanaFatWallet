@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.R
-import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayData
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
 import arakene.fatwallet.fragments.dialog.PayFullDialog
@@ -14,10 +14,10 @@ import arakene.fatwallet.fragments.dialog.PayFullDialog
 class PayListHolder(private val binding: PayListItemLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var currentItem: PayDTO
+    private lateinit var currentItem: PayData
 
 
-    fun bind(item: PayDTO) {
+    fun bind(item: PayData) {
 
         currentItem = item
         binding.apply {

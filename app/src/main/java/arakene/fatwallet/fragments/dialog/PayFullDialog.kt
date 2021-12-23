@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
-import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayData
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayFullDialogLayoutBinding
 import arakene.fatwallet.test.TagList
@@ -78,11 +78,11 @@ class PayFullDialog() : DialogFragment() {
 
             updateOk.setOnClickListener {
                 vm!!.updateData(
-                    PayDTO(
-                        PayType.input,
-                        updatePurpose.text.toString(),
-                        updatePrice.text.toString().toLong(),
-                        updateDes.text.toString(),
+                    PayData(
+                        type = PayType.input,
+                        purpose = updatePurpose.text.toString(),
+                        price = updatePrice.text.toString().toLong(),
+                        description = updateDes.text.toString(),
                         date = pickedDate.text.toString()
                     ), updateTags.text.toString()
                 )

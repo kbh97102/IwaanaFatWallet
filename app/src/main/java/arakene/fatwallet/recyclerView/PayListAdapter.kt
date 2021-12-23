@@ -1,20 +1,17 @@
 package arakene.fatwallet.recyclerView
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
-import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayData
 import arakene.fatwallet.viewModel.PayViewModel
 
 class PayListAdapter(private val model: PayViewModel) : RecyclerView.Adapter<PayListHolder>() {
 
-    private val items = ArrayList<PayDTO>()
+    private val items = ArrayList<PayData>()
 
-    fun setItems(data: List<PayDTO>) {
+    fun setItems(data: List<PayData>) {
         items.clear()
         items.addAll(data)
     }
