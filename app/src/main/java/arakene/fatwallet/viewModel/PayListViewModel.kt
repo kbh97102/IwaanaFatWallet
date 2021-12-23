@@ -3,6 +3,7 @@ package arakene.fatwallet.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -31,6 +32,26 @@ class PayListViewModel : ViewModel() {
 
     fun getOutput(): MutableLiveData<String> = outputText
     fun getInput(): MutableLiveData<String> = inputText
+
+    fun getSortedPaysByDate(date: String): ArrayList<PayDTO> {
+        val sortedList = ArrayList<PayDTO>()
+        list.forEach {
+            if (it.date == date) {
+                sortedList.add(it)
+            }
+        }
+        return sortedList
+    }
+
+    fun getSortedPaysByTag(tag: PayTag): ArrayList<PayDTO> {
+        val sortedList = ArrayList<PayDTO>()
+        list.forEach {
+            if (it.tags.contains(tag)) {
+                sortedList.add(it)
+            }
+        }
+        return sortedList
+    }
 
     private fun getTotalPay() {
         val calendar = Calendar.getInstance()
