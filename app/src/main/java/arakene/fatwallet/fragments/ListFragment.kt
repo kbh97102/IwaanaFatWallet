@@ -37,6 +37,9 @@ class ListFragment : Fragment() {
             setAdapterData(it)
         })
 
+        binding.listReset.setOnClickListener {
+            setAdapterData(model.getPayList().value!!)
+        }
 
         tagList.getTagList().observe(viewLifecycleOwner, { it ->
             val list = ArrayList<String>().apply {
@@ -55,14 +58,14 @@ class ListFragment : Fragment() {
                     val tagName = binding.listTag.getItemAtPosition(position)
                     it.forEach { payTag ->
                         if (payTag.name == tagName) {
-                            setTest(payTag)
+                            setSortedData(payTag)
                             return@forEach
                         }
                     }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                    setAdapterData(model.getPayList().value!!)
                 }
             }
         })
@@ -71,7 +74,7 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    private fun setTest(tag: PayTag) {
+    private fun setSortedData(tag: PayTag) {
         setAdapterData(model.getSortedPaysByTag(tag))
     }
 
