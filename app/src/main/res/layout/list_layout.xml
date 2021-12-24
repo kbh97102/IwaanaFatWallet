@@ -6,31 +6,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.03" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/view_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.97" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/view_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.02" />
+
+        <ImageButton
             android:id="@+id/list_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_reset"
             android:text="reset"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/button_start"
+            app:layout_constraintTop_toTopOf="@id/view_top" />
 
-        <Button
+        <ImageButton
             android:id="@+id/list_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_calendar_today_24"
             android:text="date"
             app:layout_constraintStart_toEndOf="@id/list_reset"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_top" />
 
         <TextView
             android:id="@+id/list_picked_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@android:color/white"
             android:layout_marginStart="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@id/list_date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_top" />
 
         <Spinner
             android:id="@+id/list_tag"
@@ -39,15 +62,16 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/output_button_border"
             app:layout_constraintStart_toEndOf="@id/list_picked_date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_top" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pay_list_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/view_end"
+            app:layout_constraintStart_toStartOf="@id/button_start"
             app:layout_constraintTop_toBottomOf="@id/list_reset" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
