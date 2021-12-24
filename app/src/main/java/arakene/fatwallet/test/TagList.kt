@@ -7,6 +7,11 @@ import arakene.fatwallet.data.PayTag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class TagList : ViewModel() {
 
@@ -28,6 +33,8 @@ class TagList : ViewModel() {
             list.value = value!!.toObjects(PayTag::class.java)
         }
     }
+
+
 
     fun getTagList(): MutableLiveData<List<PayTag>> = list
 
@@ -71,7 +78,7 @@ class TagList : ViewModel() {
         }
     }
 
-    fun deleteTag(removeTarget : PayTag) {
+    fun deleteTag(removeTarget: PayTag) {
         if (list.value!!.contains(removeTarget)) {
             collection.whereEqualTo("name", removeTarget.name).get()
                 .addOnCompleteListener {
