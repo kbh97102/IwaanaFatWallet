@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.R
 import arakene.fatwallet.databinding.DefaultLayoutBinding
+import arakene.fatwallet.recyclerView.monthly.MonthlyAdapter
 import arakene.fatwallet.viewModel.PayListViewModel
 import arakene.fatwallet.viewModel.PayViewModel
 
@@ -28,10 +30,19 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.payListViewModel = model
 
+        val monthlyAdapter = MonthlyAdapter()
 
-//        model.getFullList().observe(viewLifecycleOwner, {
-//            Log.e("ListTest", model.getTotalPay().toString())
-//        })
+        binding.monthlyOutRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = monthlyAdapter
+        }
+
+        model2.getMonthlyOutputList().observe(viewLifecycleOwner, {
+            monthlyAdapter.apply {
+                setData(it)
+                notifyDataSetChanged()
+            }
+        })
 
         return binding.root
     }

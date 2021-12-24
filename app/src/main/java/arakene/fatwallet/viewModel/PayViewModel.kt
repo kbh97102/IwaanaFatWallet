@@ -23,10 +23,19 @@ class PayViewModel : ViewModel() {
         MutableLiveData()
     }
 
+    private val monthlyList: MutableLiveData<List<PayDTO>> by lazy {
+        MutableLiveData()
+    }
+
     init {
         collection.addSnapshotListener { value, error ->
             list.value = value!!.toObjects(PayDTO::class.java)
         }
+    }
+
+    fun getMonthlyOutputList() : MutableLiveData<List<PayDTO>> {
+        monthlyList.value = getSortedPaysByTag(PayTag(PayTag.MONTHLYOUTPUT, 1))
+        return monthlyList
     }
 
     fun getPayList(): MutableLiveData<List<PayDTO>> = list

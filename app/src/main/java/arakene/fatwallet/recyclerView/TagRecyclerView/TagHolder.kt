@@ -22,6 +22,9 @@ class TagHolder(private val binding: TagItemLayoutBinding) : RecyclerView.ViewHo
                 binding.tagDelete.visibility = View.INVISIBLE
             }
         }
+        if (item.name == PayTag.MONTHLYOUTPUT){
+            binding.tagDelete.visibility = View.INVISIBLE
+        }
     }
 
 }
