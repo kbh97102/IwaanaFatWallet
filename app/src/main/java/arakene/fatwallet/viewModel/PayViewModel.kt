@@ -33,6 +33,16 @@ class PayViewModel : ViewModel() {
 
     fun getChangeTarget(): MutableLiveData<PayDTO> = target
 
+    fun getSortedPaysByDate(date: String): ArrayList<PayDTO> {
+        val sortedList = ArrayList<PayDTO>()
+        list.value!!.forEach {
+            if (it.date == date) {
+                sortedList.add(it)
+            }
+        }
+        return sortedList
+    }
+
     fun getSortedPaysByTag(tag: PayTag): ArrayList<PayDTO> {
         val sortedList = ArrayList<PayDTO>()
         list.value!!.forEach {

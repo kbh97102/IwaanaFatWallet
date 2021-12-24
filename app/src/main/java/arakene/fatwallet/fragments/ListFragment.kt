@@ -1,5 +1,6 @@
 package arakene.fatwallet.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,9 @@ import arakene.fatwallet.databinding.ListLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
 import arakene.fatwallet.test.TagList
 import arakene.fatwallet.viewModel.PayViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ListFragment : Fragment() {
 
@@ -37,10 +41,14 @@ class ListFragment : Fragment() {
             setAdapterData(it)
         })
 
-        binding.listReset.setOnClickListener {
-            setAdapterData(model.getPayList().value!!)
-        }
+        setUI()
 
+        setTagSpinner()
+
+        return binding.root
+    }
+
+    private fun setTagSpinner(){
         tagList.getTagList().observe(viewLifecycleOwner, { it ->
             val list = ArrayList<String>().apply {
                 add("Tag")
@@ -48,8 +56,12 @@ class ListFragment : Fragment() {
                     this.add(it.name)
                 }
             }
-            binding.listTag.adapter = ArrayAdapter<String>(requireContext(), R.layout.support_simple_spinner_dropdown_item, list)
-            binding.listTag.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            binding.listTag.adapter = ArrayAdapter<String>(
+                requireContext(),
+                R.layout.support_simple_spinner_dropdown_item,
+                list
+            )
+            binding.listTag.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
@@ -57,7 +69,7 @@ class ListFragment : Fragment() {
                     id: Long
                 ) {
                     val tagName = binding.listTag.getItemAtPosition(position)
-                    if (tagName == "Tag"){
+                    if (tagName == "Tag") {
                         return
                     }
                     it.forEach { payTag ->
@@ -73,9 +85,48 @@ class ListFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun setUI() {
+        binding.apply {
+            listReset.setOnClickListener {
+                setAdapterData(model.getPayList().value!!)
+            }
+            listPickedDate.text = getToday()
+            listDate.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, _year, monthOfYear, dayOfMonth ->
+                        val _month = monthOfYear + 1
+                        val _calendar = Calendar.getInstance()
+                        _calendar.set(year, monthOfYear, dayOfMonth)
+                        val date = calendar.time
+                        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
+                        val dayName: String = simpledateformat.format(date)
+                        val dayText = "$_year.$_month.$dayOfMonth ($dayName)"
+                        setAdapterData(model.getSortedPaysByDate(dayText))
+                        binding.listPickedDate.text = "$_year.$_month.$dayOfMonth"
+                    },
+                    year,
+                    month,
+                    day
+                )
+                datePickerDialog.show()
+            }
+        }
+    }
 
-        return binding.root
+    private fun getToday(): String {
+        val calendar = Calendar.getInstance()
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH] + 1
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val date = calendar.time
+        return "$year.$month.$day"
     }
 
     private fun setSortedData(tag: PayTag) {

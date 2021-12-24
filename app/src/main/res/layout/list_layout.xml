@@ -22,13 +22,23 @@
             app:layout_constraintStart_toEndOf="@id/list_reset"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/list_picked_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@id/list_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Spinner
             android:id="@+id/list_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/list_date"
-            android:background="@drawable/output_button_border"
             android:layout_marginStart="10dp"
+            android:background="@drawable/output_button_border"
+            app:layout_constraintStart_toEndOf="@id/list_picked_date"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
