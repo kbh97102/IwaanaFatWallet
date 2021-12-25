@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import arakene.fatwallet.dao.PayDao
+import arakene.fatwallet.dao.TagDao
 import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.test.PayConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [PayDTO::class], version = 1, exportSchema = false)
+@Database(entities = [PayDTO::class, PayTag::class], version = 2)
 @TypeConverters(
     value = [
         PayConverter::class
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 abstract class PayDB : RoomDatabase() {
 
     abstract fun payDao(): PayDao
+    abstract fun tagDao(): TagDao
 
     companion object {
         @Volatile

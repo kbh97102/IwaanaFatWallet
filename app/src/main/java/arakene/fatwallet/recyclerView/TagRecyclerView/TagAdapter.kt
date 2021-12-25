@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.databinding.TagItemLayoutBinding
-import arakene.fatwallet.test.TagList
+import arakene.fatwallet.viewModel.TagViewModel
 
-class TagAdapter(private val model: TagList) : RecyclerView.Adapter<TagHolder>() {
+class TagAdapter(private val model: TagViewModel) : RecyclerView.Adapter<TagHolder>() {
 
     private val items = ArrayList<PayTag>()
 

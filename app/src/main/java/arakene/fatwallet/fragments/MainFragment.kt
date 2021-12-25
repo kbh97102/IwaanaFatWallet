@@ -37,12 +37,12 @@ class MainFragment : Fragment() {
             adapter = monthlyAdapter
         }
 
-        model2.getMonthlyOutputList().observe(viewLifecycleOwner, {
-            monthlyAdapter.apply {
-                setData(it)
-                notifyDataSetChanged()
-            }
-        })
+//        model2.getMonthlyOutputList().observe(viewLifecycleOwner, {
+//            monthlyAdapter.apply {
+//                setData(it)
+//                notifyDataSetChanged()
+//            }
+//        })
 
         return binding.root
     }

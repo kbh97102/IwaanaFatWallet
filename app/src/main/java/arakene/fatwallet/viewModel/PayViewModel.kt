@@ -22,7 +22,7 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
     }
 
     fun getMonthlyOutputList(): MutableLiveData<List<PayDTO>> {
-        monthlyList.value = getSortedPaysByTag(PayTag(PayTag.MONTHLYOUTPUT, 1))
+        monthlyList.value = getSortedPaysByTag(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
         return monthlyList
     }
 
@@ -62,7 +62,7 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
             val tagList = ArrayList<PayTag>()
             tags.split(" ").onEach { name ->
                 if (name.trim() != "") {
-                    tagList.add(PayTag(name, 1))
+                    tagList.add(PayTag(name = name, count = 1))
                 }
             }
 
@@ -92,7 +92,7 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         val tagList = ArrayList<PayTag>()
         tags.split(" ").let {
             it.forEach { name ->
-                tagList.add(PayTag(name, 1))
+                tagList.add(PayTag(name = name, count =  1))
             }
         }
 

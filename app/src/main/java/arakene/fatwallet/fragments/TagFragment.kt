@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.R
 import arakene.fatwallet.databinding.TagLayoutBinding
 import arakene.fatwallet.fragments.dialog.TagAddDialog
 import arakene.fatwallet.recyclerView.TagRecyclerView.TagAdapter
-import arakene.fatwallet.test.TagList
+import arakene.fatwallet.viewModel.TagViewModel
 
 class TagFragment : Fragment() {
 
@@ -44,7 +43,7 @@ class TagFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        val model: TagList by activityViewModels()
+        val model: TagViewModel by activityViewModels()
 
         tagAdapter = TagAdapter(model)
         binding.tagRecycler.apply {

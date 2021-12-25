@@ -10,7 +10,7 @@ import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.databinding.TagAddLayoutBinding
-import arakene.fatwallet.test.TagList
+import arakene.fatwallet.viewModel.TagViewModel
 
 class TagAddDialog : DialogFragment() {
 
@@ -23,7 +23,7 @@ class TagAddDialog : DialogFragment() {
     ): View? {
         binding = TagAddLayoutBinding.inflate(inflater, container, false)
 
-        val model: TagList by activityViewModels()
+        val model: TagViewModel by activityViewModels()
 
         binding.newTagAdd.setOnClickListener {
             model.addTag(binding.newTagName.text.toString())

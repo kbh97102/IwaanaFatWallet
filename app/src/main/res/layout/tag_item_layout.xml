@@ -5,7 +5,7 @@
     <data>
         <variable
             name="tagViewModel"
-            type="arakene.fatwallet.test.TagList" />
+            type="arakene.fatwallet.viewModel.TagViewModel" />
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout

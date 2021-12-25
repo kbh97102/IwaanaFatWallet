@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,8 +17,11 @@ import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.databinding.ListLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
-import arakene.fatwallet.test.TagList
+import arakene.fatwallet.test.PayApplication
+import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.viewModel.PayViewModel
+import arakene.fatwallet.viewModel.PayViewModelFactory
+import arakene.fatwallet.viewModel.TagViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,8 +30,13 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: ListLayoutBinding
     private lateinit var payAdapter: PayListAdapter
-    private val model: PayViewModel by activityViewModels()
-    private val tagList: TagList by activityViewModels()
+    private val model: PayViewModel by activityViewModels{
+        PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
+    }
+    private val tagViewModel: TagViewModel by activityViewModels{
+        TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +58,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setTagSpinner(){
-        tagList.getTagList().observe(viewLifecycleOwner, { it ->
+        tagViewModel.getTagList().observe(viewLifecycleOwner, { it ->
             val list = ArrayList<String>().apply {
                 add("Tag")
                 it.forEach {
@@ -125,7 +134,6 @@ class ListFragment : Fragment() {
         val year = calendar[Calendar.YEAR]
         val month = calendar[Calendar.MONTH] + 1
         val day = calendar[Calendar.DAY_OF_MONTH]
-        val date = calendar.time
         return "$year.$month.$day"
     }
 

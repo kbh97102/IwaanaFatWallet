@@ -21,4 +21,5 @@ interface PayDao {
 
     @Query("DELETE FROM pay_table")
     suspend fun deleteAll()
+
 }

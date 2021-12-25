@@ -2,6 +2,7 @@ package arakene.fatwallet.repository
 
 import androidx.annotation.WorkerThread
 import arakene.fatwallet.dao.PayDao
+import arakene.fatwallet.dao.TagDao
 import arakene.fatwallet.data.PayDTO
 import kotlinx.coroutines.flow.Flow
 

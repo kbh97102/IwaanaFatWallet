@@ -11,7 +11,7 @@ data class PayDTO(
     var purpose: String? = null,
     var price: Long? = null,
     var description: String? = null,
-    var tags: ArrayList<PayTag> = arrayListOf(),
+    var tags: List<PayTag> = arrayListOf(),
     var date: String? = null
 ) {
 

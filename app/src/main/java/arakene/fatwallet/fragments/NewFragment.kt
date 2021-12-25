@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
-import arakene.fatwallet.test.TagList
+import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.test.TestWordBox
 import arakene.fatwallet.viewModel.PayViewModel
 import java.text.SimpleDateFormat
@@ -39,9 +39,9 @@ class NewFragment : Fragment() {
 
         val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
 
-        val tagList: TagList by activityViewModels()
+        val tagViewModel: TagViewModel by activityViewModels()
 
-        tagList.getTagList().observe(viewLifecycleOwner, {
+        tagViewModel.getTagList().observe(viewLifecycleOwner, {
             it.forEach { payTag ->
                 testWordBox.addButton(payTag.name)
             }

@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import arakene.fatwallet.databinding.MainMenuLayoutBinding
-import arakene.fatwallet.viewModel.PayListViewModel
-import arakene.fatwallet.viewModel.PayViewModel
+import arakene.fatwallet.test.PayApplication
+import arakene.fatwallet.viewModel.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainUITestActivity : AppCompatActivity() {
@@ -22,8 +22,13 @@ class MainUITestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_menu_layout)
 
-        val test: PayViewModel by viewModels()
-        val test2: PayListViewModel by viewModels()
+        val test: PayViewModel by viewModels{
+            PayViewModelFactory((application as PayApplication).payRepository)
+        }
+
+
+
+
         binding.vm = test
 
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)

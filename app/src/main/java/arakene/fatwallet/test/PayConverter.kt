@@ -15,7 +15,7 @@ class PayConverter {
     @TypeConverter
     fun jsonToTags(value: String): List<PayTag> {
         val gson = GsonBuilder().create()
-        return gson.fromJson(value, Array<PayTag>::class.java).toList()
+        return gson.fromJson(value, Array<PayTag>::class.java).asList()
     }
 
 }
