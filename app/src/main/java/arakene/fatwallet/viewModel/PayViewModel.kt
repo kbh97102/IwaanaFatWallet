@@ -5,6 +5,7 @@ import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.repository.PayRepository
+import arakene.fatwallet.test.PayApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
