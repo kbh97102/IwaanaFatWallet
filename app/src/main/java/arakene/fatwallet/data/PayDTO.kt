@@ -1,7 +1,12 @@
 package arakene.fatwallet.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+
+@Entity(tableName = "pay_table")
 data class PayDTO(
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
     var type: PayType? = null,
     var purpose: String? = null,
     var price: Long? = null,
