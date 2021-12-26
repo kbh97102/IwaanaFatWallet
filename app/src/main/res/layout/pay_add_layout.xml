@@ -132,8 +132,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/add_textview_style"
-            android:textSize="20sp"
             android:inputType="number"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/update_price_text"
             app:layout_constraintTop_toBottomOf="@id/update_purpose" />
@@ -180,13 +180,26 @@
             app:layout_constraintStart_toEndOf="@id/update_tag_text"
             app:layout_constraintTop_toBottomOf="@id/update_des" />
 
-
+        <Button
+            android:id="@+id/update_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Delete"
+            android:textSize="20sp"
+            android:background="@color/fui_transparent"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toStartOf="@id/update_ok"
+            app:layout_constraintTop_toBottomOf="@id/update_tags"
+            android:visibility="invisible"
+            />
 
         <Button
             android:id="@+id/update_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@android:color/holo_red_light"

@@ -12,13 +12,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
-import arakene.fatwallet.data.PayDTO
-import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.test.PayApplication
 import arakene.fatwallet.test.TestWordBox
 import arakene.fatwallet.viewModel.PayViewModel
+import arakene.fatwallet.viewModel.PayViewModelFactory
 import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.viewModel.TagViewModelFactory
 import java.text.SimpleDateFormat
@@ -27,6 +26,10 @@ import java.util.*
 class NewFragment : Fragment() {
 
     private lateinit var binding: PayAddLayoutBinding
+    val model: PayViewModel by activityViewModels{
+        PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,10 +37,7 @@ class NewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.pay_add_layout, container, false)
-
-        val test: PayViewModel by activityViewModels()
-
-        binding.vm = test
+        binding.vm = model
 
         setData()
 
@@ -54,7 +54,10 @@ class NewFragment : Fragment() {
                     PayType.output -> typeRadio.check(R.id.output)
                     else -> {}
                 }
+                updateDelete.visibility = View.VISIBLE
             }
+        }else{
+            binding.updateDelete.visibility = View.INVISIBLE
         }
 
 
@@ -88,6 +91,10 @@ class NewFragment : Fragment() {
 
     private fun setData() {
         binding.apply {
+            updateDelete.setOnClickListener {
+                model.deleteData()
+                clear()
+            }
             typeRadio.check(binding.input.id)
             newReset.setOnClickListener {
                 clear()
@@ -99,7 +106,7 @@ class NewFragment : Fragment() {
                     R.id.input -> selectedID = PayType.input
                     R.id.output -> selectedID = PayType.output
                 }
-                vm!!.saveData(
+                model.saveData(
                     selectedID,
                     updatePurpose.text.toString(),
                     updatePrice.text.toString(),

@@ -15,12 +15,7 @@ import java.lang.StringBuilder
 class PayListHolder(private val binding: PayListItemLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var currentItem: PayDTO
-
-
     fun bind(item: PayDTO) {
-
-        currentItem = item
         binding.apply {
             when (item.type) {
                 PayType.input -> {
@@ -56,7 +51,7 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
         }
 
         binding.root.setOnClickListener {
-
+            binding.vm!!.getChangeTarget().value = item
             val builder = StringBuilder()
 
             item.tags.forEachIndexed { index, payTag ->
