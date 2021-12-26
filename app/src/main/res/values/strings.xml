@@ -7,4 +7,5 @@
     <string name="date_text">날짜</string>
     <string name="input_text">수입</string>
     <string name="output_text">지출</string>
+    <string name="monthly_output_date_text">결제일</string>
 </resources>

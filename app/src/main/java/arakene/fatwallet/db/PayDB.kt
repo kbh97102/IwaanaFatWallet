@@ -37,7 +37,7 @@ abstract class PayDB : RoomDatabase() {
                     PayDB::class.java,
                     "pay_database"
                 )
-                    .addCallback(PayCallBack(scope))
+//                    .addCallback(PayCallBack(scope))
                     .build()
                 INSTANCE = instance
                 instance

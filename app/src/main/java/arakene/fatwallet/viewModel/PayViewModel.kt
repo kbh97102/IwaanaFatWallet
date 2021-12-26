@@ -5,9 +5,10 @@ import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.repository.PayRepository
-import arakene.fatwallet.test.PayApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PayViewModel(private val repository: PayRepository) : ViewModel() {
 
@@ -26,6 +27,17 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         return monthlyList
     }
 
+    private val inputText = MutableLiveData<String>()
+    private val outputText = MutableLiveData<String>()
+
+    init {
+        getCurrentMonthPay()
+    }
+
+    fun getOutput(): MutableLiveData<String> = outputText
+
+    fun getInput(): MutableLiveData<String> = inputText
+
     fun getPayList(): LiveData<List<PayDTO>> = list
 
     fun getChangeTarget(): MutableLiveData<PayDTO> = target
@@ -42,9 +54,11 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
 
     fun getSortedPaysByTag(tag: PayTag): ArrayList<PayDTO> {
         val sortedList = ArrayList<PayDTO>()
-        list.value!!.forEach {
-            if (it.tags.contains(tag)) {
-                sortedList.add(it)
+        list.value?.let {
+            it.forEach { pay ->
+                if (pay.tags.contains(tag)) {
+                    sortedList.add(pay)
+                }
             }
         }
         return sortedList
@@ -92,13 +106,34 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         val tagList = ArrayList<PayTag>()
         tags.split(" ").let {
             it.forEach { name ->
-                tagList.add(PayTag(name = name, count =  1))
+                tagList.add(PayTag(name = name, count = 1))
             }
         }
-
         data.tags = tagList
+    }
 
+    fun getCurrentMonthPay(): ArrayList<PayDTO> {
+        val calendar = Calendar.getInstance()
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH] + 1
+        var inputSum = 0L
+        var outputSum = 0L
 
+        val sortedList = getSortedPaysByTag(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
+
+        sortedList.forEach { pay ->
+            if (pay.date!!.startsWith("$year.$month")) {
+                if (pay.type == PayType.input) {
+                    inputSum += pay.price!!
+                } else {
+                    outputSum += pay.price!!
+                }
+            }
+        }
+        inputText.value = inputSum.toString()
+        outputText.value = outputSum.toString()
+
+        return sortedList
     }
 
 }

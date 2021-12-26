@@ -26,9 +26,6 @@ class MainUITestActivity : AppCompatActivity() {
             PayViewModelFactory((application as PayApplication).payRepository)
         }
 
-
-
-
         binding.vm = test
 
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)

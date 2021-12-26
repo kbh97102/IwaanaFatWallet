@@ -1,7 +1,6 @@
 package arakene.fatwallet.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.R
+import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.databinding.DefaultLayoutBinding
 import arakene.fatwallet.recyclerView.monthly.MonthlyAdapter
-import arakene.fatwallet.viewModel.PayListViewModel
 import arakene.fatwallet.viewModel.PayViewModel
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: DefaultLayoutBinding
-    private val model: PayListViewModel by activityViewModels()
-    private val model2: PayViewModel by activityViewModels()
+    private val model: PayViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +26,7 @@ class MainFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.default_layout, container, false)
         binding.lifecycleOwner = this
-        binding.payListViewModel = model
+        binding.vm = model
 
         val monthlyAdapter = MonthlyAdapter()
 
@@ -37,12 +35,12 @@ class MainFragment : Fragment() {
             adapter = monthlyAdapter
         }
 
-//        model2.getMonthlyOutputList().observe(viewLifecycleOwner, {
-//            monthlyAdapter.apply {
-//                setData(it)
-//                notifyDataSetChanged()
-//            }
-//        })
+        model.getPayList().observe(viewLifecycleOwner, {
+            monthlyAdapter.apply {
+                setData(model.getCurrentMonthPay())
+                notifyDataSetChanged()
+            }
+        })
 
         return binding.root
     }

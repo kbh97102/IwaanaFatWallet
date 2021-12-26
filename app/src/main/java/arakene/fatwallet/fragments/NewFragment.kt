@@ -14,9 +14,11 @@ import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
-import arakene.fatwallet.viewModel.TagViewModel
+import arakene.fatwallet.test.PayApplication
 import arakene.fatwallet.test.TestWordBox
 import arakene.fatwallet.viewModel.PayViewModel
+import arakene.fatwallet.viewModel.TagViewModel
+import arakene.fatwallet.viewModel.TagViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,7 +41,10 @@ class NewFragment : Fragment() {
 
         val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
 
-        val tagViewModel: TagViewModel by activityViewModels()
+        val tagViewModel: TagViewModel by activityViewModels {
+            TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
+        }
+
 
         tagViewModel.getTagList().observe(viewLifecycleOwner, {
             it.forEach { payTag ->

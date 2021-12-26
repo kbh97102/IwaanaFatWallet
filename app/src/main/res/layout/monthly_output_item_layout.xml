@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/view_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/view_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/view_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <TextView
+        android:id="@+id/monthly_purpose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="purposeTest"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="@id/view_start"
+        app:layout_constraintTop_toTopOf="@id/view_top" />
+
+    <TextView
+        android:id="@+id/monthly_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+123456"
+        android:textSize="30sp"
+        android:textColor="@color/output_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_end" />
+
+    <TextView
+        android:id="@+id/monthly_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="2021.12.26"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/monthly_date_label"
+        app:layout_constraintTop_toBottomOf="@id/monthly_purpose" />
+
+    <TextView
+        android:id="@+id/monthly_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/monthly_output_date_text"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/view_start"
+        app:layout_constraintTop_toBottomOf="@id/monthly_purpose" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
