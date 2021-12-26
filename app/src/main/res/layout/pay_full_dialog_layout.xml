@@ -32,10 +32,10 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/input_button_border"
-                android:buttonTint="#00a2ee"
+                android:buttonTint="@color/input_color"
                 android:gravity="center"
                 android:text="Input"
-                android:textColor="#00a2ee"
+                android:textColor="@color/input_color"
                 android:textSize="25sp" />
 
             <RadioButton
@@ -47,10 +47,10 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/output_button_border"
-                android:buttonTint="#ff7f00"
+                android:buttonTint="@color/output_color"
                 android:gravity="center"
                 android:text="Output"
-                android:textColor="#ff7f00"
+                android:textColor="@color/output_color"
                 android:textSize="25sp" />
 
         </RadioGroup>
@@ -182,21 +182,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/update_tag_text"
             app:layout_constraintTop_toBottomOf="@id/update_des" />
-
-
-        <Button
-            android:id="@+id/update_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/fui_transparent"
-            android:text="Cancel"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@id/update_delete"
-            app:layout_constraintTop_toBottomOf="@id/update_tags" />
 
         <Button
             android:id="@+id/update_delete"

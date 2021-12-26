@@ -62,10 +62,6 @@ class PayFullDialog() : DialogFragment() {
                 vm!!.deleteData()
                 dismiss()
             }
-            updateCancel.setOnClickListener {
-                dismiss()
-            }
-
             val builder = StringBuilder()
             vm!!.getChangeTarget().value!!.tags.forEachIndexed { index, payTag ->
                 if (index == vm!!.getChangeTarget().value!!.tags.size - 1) {
