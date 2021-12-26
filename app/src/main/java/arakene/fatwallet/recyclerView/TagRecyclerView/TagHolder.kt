@@ -15,13 +15,6 @@ class TagHolder(private val binding: TagItemLayoutBinding) : RecyclerView.ViewHo
         binding.tagDelete.setOnClickListener {
             binding.tagViewModel!!.deleteTag(item)
         }
-        binding.tagName.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                binding.tagDelete.visibility = View.VISIBLE
-            }else{
-                binding.tagDelete.visibility = View.INVISIBLE
-            }
-        }
         if (item.name == PayTag.MONTHLYOUTPUT){
             binding.tagDelete.visibility = View.INVISIBLE
         }

@@ -12,7 +12,9 @@ import arakene.fatwallet.R
 import arakene.fatwallet.databinding.TagLayoutBinding
 import arakene.fatwallet.fragments.dialog.TagAddDialog
 import arakene.fatwallet.recyclerView.TagRecyclerView.TagAdapter
+import arakene.fatwallet.test.PayApplication
 import arakene.fatwallet.viewModel.TagViewModel
+import arakene.fatwallet.viewModel.TagViewModelFactory
 
 class TagFragment : Fragment() {
 
@@ -30,8 +32,8 @@ class TagFragment : Fragment() {
 
         binding.tagToolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.tag_add) {
-                val dialog = TagAddDialog().show(
-                    activity!!.supportFragmentManager,
+                TagAddDialog().show(
+                    requireActivity().supportFragmentManager,
                     null
                 )
             }
@@ -43,7 +45,9 @@ class TagFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        val model: TagViewModel by activityViewModels()
+        val model: TagViewModel by activityViewModels {
+            TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
+        }
 
         tagAdapter = TagAdapter(model)
         binding.tagRecycler.apply {
