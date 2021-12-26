@@ -12,6 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import arakene.fatwallet.R
+import arakene.fatwallet.data.PayDTO
+import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.test.PayApplication
@@ -38,6 +40,24 @@ class NewFragment : Fragment() {
         binding.vm = test
 
         setData()
+
+        val bundle = arguments
+
+        if (bundle != null){
+            binding.apply {
+                updatePurpose.setText(bundle.getString("purpose"))
+                updateDes.setText(bundle.getString("des"))
+                updatePrice.setText(bundle.getString("price"))
+                updateTags.text = bundle.getString("tags")
+                when (bundle["type"] as PayType) {
+                    PayType.input -> typeRadio.check(R.id.input)
+                    PayType.output -> typeRadio.check(R.id.output)
+                    else -> {}
+                }
+            }
+        }
+
+
 
         val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
 

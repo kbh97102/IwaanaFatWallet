@@ -3,13 +3,14 @@ package arakene.fatwallet.recyclerView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
-import arakene.fatwallet.fragments.dialog.PayFullDialog
+import java.lang.StringBuilder
 
 class PayListHolder(private val binding: PayListItemLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -55,11 +56,27 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
         }
 
         binding.root.setOnClickListener {
-            binding.vm!!.getChangeTarget().value = item
-            PayFullDialog().show(
-                ((binding.root.context) as FragmentActivity).supportFragmentManager,
-                null
+
+            val builder = StringBuilder()
+
+            item.tags.forEachIndexed { index, payTag ->
+                if (index == item.tags.size - 1) {
+                    builder.append(payTag.name)
+                }else{
+                    builder.append(payTag.name).append(" ")
+                }
+            }
+
+            val bundle = bundleOf(
+                "purpose" to item.purpose,
+                "price" to item.price.toString(),
+                "des" to item.description,
+                "date" to item.date,
+                "type" to item.type,
+                "tags" to builder.toString()
             )
+
+            it.findNavController().navigate(R.id.newFragment, bundle)
         }
     }
 
