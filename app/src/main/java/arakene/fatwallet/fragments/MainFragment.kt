@@ -9,15 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import arakene.fatwallet.R
-import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.databinding.DefaultLayoutBinding
 import arakene.fatwallet.recyclerView.monthly.MonthlyAdapter
+import arakene.fatwallet.test.PayApplication
 import arakene.fatwallet.viewModel.PayViewModel
+import arakene.fatwallet.viewModel.PayViewModelFactory
+import arakene.fatwallet.viewModel.TagViewModel
+import arakene.fatwallet.viewModel.TagViewModelFactory
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: DefaultLayoutBinding
-    private val model: PayViewModel by activityViewModels()
+    private val model: PayViewModel by activityViewModels {
+        PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

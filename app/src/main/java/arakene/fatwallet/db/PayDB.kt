@@ -10,10 +10,8 @@ import arakene.fatwallet.dao.PayDao
 import arakene.fatwallet.dao.TagDao
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
-import arakene.fatwallet.data.PayType
 import arakene.fatwallet.test.PayConverter
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(entities = [PayDTO::class, PayTag::class], version = 2)
 @TypeConverters(
@@ -36,9 +34,7 @@ abstract class PayDB : RoomDatabase() {
                     context.applicationContext,
                     PayDB::class.java,
                     "pay_database"
-                )
-//                    .addCallback(PayCallBack(scope))
-                    .build()
+                ).addCallback(PayCallBack(scope)).build()
                 INSTANCE = instance
                 instance
             }
@@ -48,23 +44,28 @@ abstract class PayDB : RoomDatabase() {
     private class PayCallBack(private val scope: CoroutineScope) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let {
-                scope.launch {
-                    var dao = it.payDao()
 
-                    dao.deleteAll()
+            db.execSQL("insert into tag_table (name, count) values ('고정지출', 1)")
 
-                    dao.insert(
-                        PayDTO(
-                            type = PayType.input,
-                            purpose = "Test",
-                            price = 123,
-                            description = "",
-                            date = "2021.12.21 (화요일)"
-                        )
-                    )
-                }
-            }
+//            INSTANCE?.let {
+//                scope.launch {
+//                    val dao = it.tagDao()
+//
+//                    val list = withContext(Dispatchers.IO) {
+//                        dao.getAllTags()
+//                    }
+//
+//                    list.asLiveData().value?.let {
+//                        it.forEach { tag ->
+//                            if (tag.name == PayTag.MONTHLYOUTPUT) {
+//                                return@launch
+//                            }
+//                        }
+//                    }
+//
+//                    dao.insert(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
+//                }
+//            }
         }
     }
 }
