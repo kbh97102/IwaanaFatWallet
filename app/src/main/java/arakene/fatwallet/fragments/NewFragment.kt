@@ -25,6 +25,7 @@ import java.util.*
 class NewFragment : Fragment() {
 
     private lateinit var binding: PayAddLayoutBinding
+    private lateinit var tagBoxController: TagBoxController
     val model: PayViewModel by activityViewModels {
         PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
     }
@@ -37,6 +38,8 @@ class NewFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.pay_add_layout, container, false)
         binding.vm = model
+
+        tagBoxController = TagBoxController(binding.updateTags, binding.tagBox, this.context!!)
 
         setData()
 
@@ -60,14 +63,15 @@ class NewFragment : Fragment() {
         }
 
 
-        val tagBoxController = TagBoxController(binding.updateTags, binding.tagBox, this.context!!)
-
         val tagViewModel: TagViewModel by activityViewModels {
             TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
         }
 
-
         tagViewModel.getTagList().observe(viewLifecycleOwner, {
+            tagBoxController.totalTagList.apply {
+                clear()
+                addAll(it)
+            }
             it.forEach { payTag ->
                 tagBoxController.addButton(payTag.name)
             }
@@ -101,8 +105,7 @@ class NewFragment : Fragment() {
                     updatePrice.text.toString(),
                     updateDes.text.toString(),
                     date = pickedDate.text.toString(),
-//                    updateTags.text.toString()
-                    tags = ""
+                    tags = tagBoxController.getAppliedTags()
                 )
                 clear()
             }
@@ -150,7 +153,7 @@ class NewFragment : Fragment() {
             updatePurpose.text = null
             updatePrice.text = null
             updateDes.text = null
-//            updateTags.text = null
+            tagBoxController.clear()
         }
         val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.newReset.windowToken, 0)
