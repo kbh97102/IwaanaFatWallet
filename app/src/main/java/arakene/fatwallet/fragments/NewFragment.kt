@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import arakene.fatwallet.R
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
@@ -87,6 +88,7 @@ class NewFragment : Fragment() {
             updateDelete.setOnClickListener {
                 model.deleteData()
                 clear()
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.listFragment)
             }
             typeRadio.check(binding.input.id)
             newReset.setOnClickListener {
