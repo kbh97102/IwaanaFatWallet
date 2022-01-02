@@ -3,7 +3,6 @@ package arakene.fatwallet.fragments
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import arakene.fatwallet.R
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayAddLayoutBinding
 import arakene.fatwallet.test.PayApplication
-import arakene.fatwallet.test.TestWordBox
+import arakene.fatwallet.test.TagBoxController
 import arakene.fatwallet.viewModel.PayViewModel
 import arakene.fatwallet.viewModel.PayViewModelFactory
 import arakene.fatwallet.viewModel.TagViewModel
@@ -26,7 +25,7 @@ import java.util.*
 class NewFragment : Fragment() {
 
     private lateinit var binding: PayAddLayoutBinding
-    val model: PayViewModel by activityViewModels{
+    val model: PayViewModel by activityViewModels {
         PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
     }
 
@@ -43,12 +42,12 @@ class NewFragment : Fragment() {
 
         val bundle = arguments
 
-        if (bundle != null){
+        if (bundle != null) {
             binding.apply {
                 updatePurpose.setText(bundle.getString("purpose"))
                 updateDes.setText(bundle.getString("des"))
                 updatePrice.setText(bundle.getString("price"))
-                updateTags.text = bundle.getString("tags")
+//                updateTags.text = bundle.getString("tags")
                 when (bundle["type"] as PayType) {
                     PayType.input -> typeRadio.check(R.id.input)
                     PayType.output -> typeRadio.check(R.id.output)
@@ -56,13 +55,12 @@ class NewFragment : Fragment() {
                 }
                 updateDelete.visibility = View.VISIBLE
             }
-        }else{
+        } else {
             binding.updateDelete.visibility = View.INVISIBLE
         }
 
 
-
-        val testWordBox = TestWordBox(binding.updateTags, binding.wordBox, this.context!!)
+        val tagBoxController = TagBoxController(binding.updateTags, binding.tagBox, this.context!!)
 
         val tagViewModel: TagViewModel by activityViewModels {
             TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
@@ -71,20 +69,11 @@ class NewFragment : Fragment() {
 
         tagViewModel.getTagList().observe(viewLifecycleOwner, {
             it.forEach { payTag ->
-                testWordBox.addButton(payTag.name)
+                tagBoxController.addButton(payTag.name)
             }
         })
 
         binding.updateTags.focusable = View.FOCUSABLE
-        binding.updateTags.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                Log.e("FocusTest", "in")
-                binding.wordBox.visibility = View.VISIBLE
-            } else {
-                Log.e("FocusTest", "out")
-                binding.wordBox.visibility = View.INVISIBLE
-            }
-        }
 
         return binding.root
     }
@@ -112,7 +101,8 @@ class NewFragment : Fragment() {
                     updatePrice.text.toString(),
                     updateDes.text.toString(),
                     date = pickedDate.text.toString(),
-                    updateTags.text.toString()
+//                    updateTags.text.toString()
+                    tags = ""
                 )
                 clear()
             }
@@ -160,7 +150,7 @@ class NewFragment : Fragment() {
             updatePurpose.text = null
             updatePrice.text = null
             updateDes.text = null
-            updateTags.text = null
+//            updateTags.text = null
         }
         val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.newReset.windowToken, 0)
