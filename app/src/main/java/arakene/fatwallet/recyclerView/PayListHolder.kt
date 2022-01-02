@@ -1,5 +1,6 @@
 package arakene.fatwallet.recyclerView
 
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -10,6 +11,7 @@ import arakene.fatwallet.R
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayType
 import arakene.fatwallet.databinding.PayListItemLayoutBinding
+import com.google.android.material.chip.Chip
 import java.lang.StringBuilder
 
 class PayListHolder(private val binding: PayListItemLayoutBinding) :
@@ -35,17 +37,12 @@ class PayListHolder(private val binding: PayListItemLayoutBinding) :
             purposeText.text = item.purpose.toString()
             tags.removeAllViews()
             item.tags.forEach {
-                val textView = TextView(tags.context).apply {
+                val chip = Chip(binding.root.context).apply {
                     text = it.name
-                    textSize = 25f
-                    layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        setMargins(15, 0, 0, 0)
-                    }
+                    isCloseIconVisible = false
+                    layoutDirection = View.LAYOUT_DIRECTION_LOCALE
                 }
-                tags.addView(textView)
+                tags.addView(chip)
             }
             date.text = item.date.toString()
         }

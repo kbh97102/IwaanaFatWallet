@@ -50,7 +50,7 @@ class NewFragment : Fragment() {
                 updatePurpose.setText(bundle.getString("purpose"))
                 updateDes.setText(bundle.getString("des"))
                 updatePrice.setText(bundle.getString("price"))
-//                updateTags.text = bundle.getString("tags")
+                tagBoxController.addChipToAppliedTags(bundle.getString("tags"))
                 when (bundle["type"] as PayType) {
                     PayType.input -> typeRadio.check(R.id.input)
                     PayType.output -> typeRadio.check(R.id.output)
@@ -73,7 +73,7 @@ class NewFragment : Fragment() {
                 addAll(it)
             }
             it.forEach { payTag ->
-                tagBoxController.addButton(payTag.name)
+                tagBoxController.addButton(payTag.name, binding.tagBox)
             }
         })
 

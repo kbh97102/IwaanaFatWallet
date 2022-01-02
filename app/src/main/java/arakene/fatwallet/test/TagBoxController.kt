@@ -15,14 +15,8 @@ class TagBoxController(
 
     var totalTagList = ArrayList<PayTag>()
 
-    fun addButton(name: String) {
-        val list = ArrayList<String>()
-        tagChips.forEach {
-            val c = it as Chip
-            list.add(c.text.toString())
-        }
-
-        if (list.contains(name)) {
+    fun addButton(name: String, targetGroup: ChipGroup) {
+        if (isContains(name, tagBox)) {
             return
         }
 
@@ -44,13 +38,13 @@ class TagBoxController(
                 }
             }
         }
-        tagBox.addView(chip)
+        targetGroup.addView(chip)
     }
 
     fun getAppliedTags(): String {
         val list = getTagNameList(tagChips)
         val builder = StringBuilder()
-        builder.forEachIndexed { index, c ->
+        list.forEachIndexed { index, c ->
             if (index == list.size - 1) {
                 builder.append(c)
             } else {
@@ -60,11 +54,21 @@ class TagBoxController(
         return builder.toString()
     }
 
+    fun addChipToAppliedTags(token: String?) {
+        if (token == null || token.trim() == "") {
+            return
+        }
+        val tokens = token.split(" ")
+        tokens.forEach {
+            addButton(it, tagChips)
+        }
+    }
+
     fun clear() {
         tagChips.removeAllViews()
         tagBox.removeAllViews()
         totalTagList.forEach {
-            addButton(it.name)
+            addButton(it.name, tagBox)
         }
     }
 
