@@ -72,6 +72,9 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         date: String,
         tags: String
     ) {
+        if (price == "") {
+            return
+        }
         viewModelScope.launch(Dispatchers.IO) {
             val tagList = ArrayList<PayTag>()
             tags.split(" ").onEach { name ->
