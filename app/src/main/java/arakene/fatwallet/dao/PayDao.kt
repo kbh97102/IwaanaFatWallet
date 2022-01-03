@@ -31,4 +31,7 @@ interface PayDao {
 
     @Query("SELECT * FROM pay_table WHERE tags = :tag")
     fun test2(tag: PayTag): List<PayDTO>
+
+    @Query("SELECT * FROM pay_table")
+    fun test3(): List<PayDTO>
 }

@@ -25,4 +25,6 @@ class PayRepository(private val payDao: PayDao) {
     fun getPaysAfterDate(date: String): List<PayDTO> = payDao.getPaysAfterDate(date)
 
     fun test(tag: PayTag): List<PayDTO> = payDao.test2(tag)
+
+    fun test2() = payDao.test3()
 }

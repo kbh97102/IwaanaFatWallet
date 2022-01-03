@@ -57,11 +57,21 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
     val test: MutableLiveData<List<PayDTO>>
         get() {
             CoroutineScope(Dispatchers.IO).launch {
-                val result =
-                    repository.test(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
-                withContext(Dispatchers.Main) {
-                    _test.value = result
-                    Log.e("ViewModelTest", result.toString())
+//                val result =
+//                    repository.test(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
+//                withContext(Dispatchers.Main) {
+//                    _test.value = result
+//                    Log.e("ViewModelTest", result.toString())
+//                }
+                val result = repository.test2()
+                val list = ArrayList<PayDTO>()
+                result.forEach {
+                    if (it.tags.contains(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))) {
+                        list.add(it)
+                    }
+                }
+                withContext(Dispatchers.Main){
+                    _test.value = list
                 }
             }
             return _test

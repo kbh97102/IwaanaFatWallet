@@ -43,7 +43,12 @@ class MainFragment : Fragment() {
             model.updateCurrentMonthPay()
         })
 
-        model.test
+        model.test.observe(viewLifecycleOwner, {
+            monthlyAdapter.apply {
+                setItems(it)
+                notifyDataSetChanged()
+            }
+        })
 
 
         return binding.root
