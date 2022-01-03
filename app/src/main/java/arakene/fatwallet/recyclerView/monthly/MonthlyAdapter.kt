@@ -10,7 +10,7 @@ class MonthlyAdapter : RecyclerView.Adapter<MonthlyHolder>() {
 
     private val items = ArrayList<PayDTO>()
 
-    fun setData(data : List<PayDTO>){
+    fun setItems(data : List<PayDTO>){
         items.clear()
         items.addAll(data)
     }

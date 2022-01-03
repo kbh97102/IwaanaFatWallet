@@ -11,12 +11,14 @@ import arakene.fatwallet.dao.TagDao
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.test.PayConverter
+import arakene.fatwallet.test.TagConverter
 import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [PayDTO::class, PayTag::class], version = 2)
 @TypeConverters(
     value = [
-        PayConverter::class
+        PayConverter::class,
+        TagConverter::class
     ]
 )
 abstract class PayDB : RoomDatabase() {

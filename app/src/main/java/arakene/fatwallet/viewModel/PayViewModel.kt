@@ -1,12 +1,13 @@
 package arakene.fatwallet.viewModel
 
+import android.util.Log
 import androidx.lifecycle.*
 import arakene.fatwallet.data.PayDTO
 import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.data.PayType
+import arakene.fatwallet.recyclerView.PayListAdapter
 import arakene.fatwallet.repository.PayRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -22,17 +23,12 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         MutableLiveData()
     }
 
-    fun getMonthlyOutputList(): MutableLiveData<List<PayDTO>> {
-        monthlyList.value = getSortedPaysByTag(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
-        return monthlyList
-    }
+    private val _specificDatePays = MutableLiveData<List<PayDTO>>()
+    val specificDatePays: MutableLiveData<List<PayDTO>>
+        get() = _specificDatePays
 
     private val inputText = MutableLiveData<String>()
     private val outputText = MutableLiveData<String>()
-
-    init {
-        getCurrentMonthPay()
-    }
 
     fun getOutput(): MutableLiveData<String> = outputText
 
@@ -42,14 +38,47 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
 
     fun getChangeTarget(): MutableLiveData<PayDTO> = target
 
-    fun getSortedPaysByDate(date: String): ArrayList<PayDTO> {
-        val sortedList = ArrayList<PayDTO>()
-        list.value!!.forEach {
-            if (it.date == date) {
-                sortedList.add(it)
+    private val testList = MutableLiveData<List<PayDTO>>()
+    val currentMonthPays: MutableLiveData<List<PayDTO>>
+        get() {
+            CoroutineScope(Dispatchers.IO).launch {
+                val calendar = Calendar.getInstance()
+                val year = calendar[Calendar.YEAR]
+                val month = calendar[Calendar.MONTH] + 1
+                val result = repository.getPaysAfterDate("$year.$month")
+                withContext(Dispatchers.Main) {
+                    testList.value = result
+                }
+            }
+            return testList
+        }
+
+    private val _test = MutableLiveData<List<PayDTO>>()
+    val test: MutableLiveData<List<PayDTO>>
+        get() {
+            CoroutineScope(Dispatchers.IO).launch {
+                val result =
+                    repository.test(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
+                withContext(Dispatchers.Main) {
+                    _test.value = result
+                    Log.e("ViewModelTest", result.toString())
+                }
+            }
+            return _test
+        }
+
+
+    fun setSortedPaysByDate(date: String, adapter: PayListAdapter) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = repository.getListWithDate(date)
+            withContext(Dispatchers.Main) {
+                _specificDatePays.value = result
+                adapter.apply {
+                    setItems(result)
+                    notifyDataSetChanged()
+                }
             }
         }
-        return sortedList
     }
 
     fun getSortedPaysByTag(tag: PayTag): ArrayList<PayDTO> {
@@ -115,17 +144,12 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         data.tags = tagList
     }
 
-    fun getCurrentMonthPay(): ArrayList<PayDTO> {
-        val calendar = Calendar.getInstance()
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH] + 1
+    fun updateCurrentMonthPay() {
         var inputSum = 0L
         var outputSum = 0L
 
-        val sortedList = getSortedPaysByTag(PayTag(name = PayTag.MONTHLYOUTPUT, count = 1))
-
-        sortedList.forEach { pay ->
-            if (pay.date!!.startsWith("$year.$month")) {
+        testList.value?.let {
+            it.forEach { pay ->
                 if (pay.type == PayType.input) {
                     inputSum += pay.price!!
                 } else {
@@ -135,8 +159,6 @@ class PayViewModel(private val repository: PayRepository) : ViewModel() {
         }
         inputText.value = inputSum.toString()
         outputText.value = outputSum.toString()
-
-        return sortedList
     }
 
 }

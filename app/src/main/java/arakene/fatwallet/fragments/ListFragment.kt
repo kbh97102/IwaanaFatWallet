@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,9 +17,9 @@ import arakene.fatwallet.data.PayTag
 import arakene.fatwallet.databinding.ListLayoutBinding
 import arakene.fatwallet.recyclerView.PayListAdapter
 import arakene.fatwallet.test.PayApplication
-import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.viewModel.PayViewModel
 import arakene.fatwallet.viewModel.PayViewModelFactory
+import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.viewModel.TagViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,10 +29,10 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: ListLayoutBinding
     private lateinit var payAdapter: PayListAdapter
-    private val model: PayViewModel by activityViewModels{
+    private val model: PayViewModel by activityViewModels {
         PayViewModelFactory((requireActivity().application as PayApplication).payRepository)
     }
-    private val tagViewModel: TagViewModel by activityViewModels{
+    private val tagViewModel: TagViewModel by activityViewModels {
         TagViewModelFactory((requireActivity().application as PayApplication).tagRepository)
     }
 
@@ -57,7 +56,7 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    private fun setTagSpinner(){
+    private fun setTagSpinner() {
         tagViewModel.getTagList().observe(viewLifecycleOwner, { it ->
             val list = ArrayList<String>().apply {
                 add("Tag")
@@ -100,6 +99,7 @@ class ListFragment : Fragment() {
         binding.apply {
             listReset.setOnClickListener {
                 setAdapterData(model.getPayList().value!!)
+                binding.listPickedDate.text = getToday()
             }
             listPickedDate.text = getToday()
             listDate.setOnClickListener {
@@ -113,12 +113,10 @@ class ListFragment : Fragment() {
                         val _month = monthOfYear + 1
                         val _calendar = Calendar.getInstance()
                         _calendar.set(year, monthOfYear, dayOfMonth)
-                        val date = calendar.time
-                        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
-                        val dayName: String = simpledateformat.format(date)
-                        val dayText = "$_year.$_month.$dayOfMonth ($dayName)"
-                        setAdapterData(model.getSortedPaysByDate(dayText))
-                        binding.listPickedDate.text = "$_year.$_month.$dayOfMonth"
+                        val dayText = "$_year.$_month.$dayOfMonth"
+                        //TODO 구조변경 MVVM에 벗어남
+                        model.setSortedPaysByDate(dayText, payAdapter)
+                        binding.listPickedDate.text = dayText
                     },
                     year,
                     month,

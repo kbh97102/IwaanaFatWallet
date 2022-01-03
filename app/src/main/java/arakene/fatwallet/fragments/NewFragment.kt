@@ -20,7 +20,6 @@ import arakene.fatwallet.viewModel.PayViewModel
 import arakene.fatwallet.viewModel.PayViewModelFactory
 import arakene.fatwallet.viewModel.TagViewModel
 import arakene.fatwallet.viewModel.TagViewModelFactory
-import java.text.SimpleDateFormat
 import java.util.*
 
 class NewFragment : Fragment() {
@@ -88,7 +87,8 @@ class NewFragment : Fragment() {
             updateDelete.setOnClickListener {
                 model.deleteData()
                 clear()
-                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.listFragment)
+                requireActivity().findNavController(R.id.nav_host_fragment)
+                    .navigate(R.id.listFragment)
             }
             typeRadio.check(binding.input.id)
             newReset.setOnClickListener {
@@ -123,10 +123,7 @@ class NewFragment : Fragment() {
                         val _month = monthOfYear + 1
                         val _calendar = Calendar.getInstance()
                         _calendar.set(year, monthOfYear, dayOfMonth)
-                        val date = calendar.time
-                        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
-                        val dayName: String = simpledateformat.format(date)
-                        pickedDate.text = "$_year.$_month.$dayOfMonth ($dayName)"
+                        pickedDate.text = "$_year.$_month.$dayOfMonth"
                     },
                     year,
                     month,
@@ -143,10 +140,8 @@ class NewFragment : Fragment() {
         val year = calendar[Calendar.YEAR]
         val month = calendar[Calendar.MONTH] + 1
         val day = calendar[Calendar.DAY_OF_MONTH]
-        val date = calendar.time
-        val simpledateformat = SimpleDateFormat("EEEE", Locale.getDefault())
-        val dayName: String = simpledateformat.format(date)
-        return "$year.$month.$day ($dayName)"
+
+        return "$year.$month.$day"
     }
 
     private fun clear() {
